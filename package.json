@@ -20,6 +20,8 @@
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",
     "@callstack/eslint-config": "^13.0.2",
+    "@commitlint/cli": "^17.6.5",
+    "@commitlint/config-conventional": "^17.6.5",
     "@react-native-community/eslint-config": "^3.2.0",
     "@testing-library/react-native": "^12.1.2",
     "@tsconfig/react-native": "^2.0.2",
