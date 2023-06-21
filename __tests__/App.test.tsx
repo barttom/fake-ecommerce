@@ -4,11 +4,14 @@
 
 import 'react-native';
 import React from 'react';
+
+import {render, screen} from '@testing-library/react-native';
 import App from '../App';
 
 // Note: test renderer must be required after react-native.
-import renderer from 'react-test-renderer';
 
 it('renders correctly', () => {
-  renderer.create(<App />);
+  render(<App />);
+
+  expect(screen.getByText('fake-ecommerce')).toBeDefined();
 });
