@@ -12,5 +12,5 @@ import App from '../src/common/App';
 it('renders correctly', () => {
   render(<App />);
 
-  expect(screen.getByText('Home')).toBeDefined();
+  expect(screen.getByText('Goto Contact')).toBeDefined();
 });
