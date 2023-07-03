@@ -1,19 +1,22 @@
 import React from 'react';
 import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import {RootNavigator} from './Navigator/';
+import {Provider} from 'react-redux';
+import {RootNavigator} from './components/Navigator/';
+import {store} from './redux';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <NavigationContainer>
+    <Provider store={store}>
+      <SafeAreaView style={{flex: 1}}>
         <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-        <RootNavigator />
-      </NavigationContainer>
-    </SafeAreaView>
+        <NavigationContainer>
+          <RootNavigator />
+        </NavigationContainer>
+      </SafeAreaView>
+    </Provider>
   );
 }
 

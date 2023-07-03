@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Text, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {ContactScreenParams} from '../../common/Navigator';
+import {ContactScreenParams} from '../../common/components/Navigator';
 
 export const ContactScreen = () => {
   const {navigate} = useNavigation<ContactScreenParams['navigation']>();

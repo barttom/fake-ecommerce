@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Text, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {HomeScreenParams} from '../../common/Navigator';
+import {HomeScreenParams} from '../../common/components/Navigator';
 
 export const HomeScreen = () => {
   const {navigate} = useNavigation<HomeScreenParams['navigation']>();

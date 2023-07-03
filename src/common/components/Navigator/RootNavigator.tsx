@@ -1,8 +1,8 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {HomeScreen} from '../../feature/Home';
-import {ContactScreen} from '../../feature/Contact';
-import {RootStackParamList} from './';
+import {HomeScreen} from '../../../feature/Home';
+import {ContactScreen} from '../../../feature/Contact';
+import {RootStackParamList} from './index';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
