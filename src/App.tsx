@@ -2,8 +2,8 @@ import React from 'react';
 import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {Provider} from 'react-redux';
-import {RootNavigator} from './components/Navigator/';
-import {store} from './redux';
+import {RootNavigator} from './common/components/Navigator';
+import {store} from './common/redux';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
