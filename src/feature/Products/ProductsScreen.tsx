@@ -1,11 +1,11 @@
 import React from 'react';
 import {Text} from 'react-native-paper';
-import {ScreenFadeInWrapper} from '../../common/components/ScreenFadeInWrapper';
+import {ScreenRollupWrapper} from '../../common/components/ScreenRollupWrapper';
 
 export const ProductsScreen = () => {
   return (
-    <ScreenFadeInWrapper>
+    <ScreenRollupWrapper>
       <Text>Products</Text>
-    </ScreenFadeInWrapper>
+    </ScreenRollupWrapper>
   );
 };
