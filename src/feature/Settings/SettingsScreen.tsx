@@ -1,6 +1,11 @@
 import React from 'react';
 import {Text} from 'react-native-paper';
+import {ScreenFadeInWrapper} from '../../common/components/ScreenFadeInWrapper';
 
 export const SettingsScreen = () => {
-  return <Text>Settings</Text>;
+  return (
+    <ScreenFadeInWrapper>
+      <Text>Settings</Text>
+    </ScreenFadeInWrapper>
+  );
 };
