@@ -1,2 +1,2 @@
 export * from './RootNavigator';
-export * from './rootNavigator.d';
+export * from './navigatorTypes';
