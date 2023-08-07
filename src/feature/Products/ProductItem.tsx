@@ -9,17 +9,8 @@ export type ProductItemProps = Pick<
 >;
 
 export const ProductItem = ({thumbnail, title, price}: ProductItemProps) => {
-  const renderPrice = () => (
-    <>
-      <Chip icon="currency-usd" mode="flat" style={styles.priceBadge}>
-        {price}
-      </Chip>
-      <IconButton icon="basket" mode="outlined" />
-    </>
-  );
-
   return (
-    <Card mode="contained" style={styles.card}>
+    <Card mode="elevated" style={styles.card}>
       <Card.Cover
         source={{uri: thumbnail}}
         theme={{
@@ -27,27 +18,36 @@ export const ProductItem = ({thumbnail, title, price}: ProductItemProps) => {
         }}
       />
       <Card.Title
-        titleVariant="titleMedium"
+        titleVariant="labelLarge"
         title={title.toUpperCase()}
-        right={renderPrice}
         rightStyle={styles.titleRight}
-        titleNumberOfLines={2}
       />
+      <Card.Content style={styles.titleRight}>
+        <Chip
+          icon="currency-usd"
+          style={styles.priceBadge}
+          elevated
+          elevation={2}>
+          {price}
+        </Chip>
+        <IconButton icon="basket" mode="outlined" />
+      </Card.Content>
     </Card>
   );
 };
 
 const styles = StyleSheet.create({
   card: {
-    marginBottom: 32,
+    marginBottom: 16,
     overflow: 'hidden',
   },
   priceBadge: {
     height: 32,
+    fontWeight: 'bold',
   },
   titleRight: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
   },
 });
