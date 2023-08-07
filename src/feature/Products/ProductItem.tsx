@@ -18,7 +18,7 @@ export const ProductItem = ({thumbnail, title, price}: ProductItemProps) => {
         }}
       />
       <Card.Title
-        titleVariant="labelLarge"
+        titleVariant="titleMedium"
         title={title.toUpperCase()}
         rightStyle={styles.titleRight}
       />
