@@ -30,7 +30,7 @@ export const ProductItem = ({thumbnail, title, price}: ProductItemProps) => {
           elevation={2}>
           {price}
         </Chip>
-        <IconButton icon="basket" mode="outlined" />
+        <IconButton icon="cart-plus" mode="outlined" />
       </Card.Content>
     </Card>
   );
@@ -43,7 +43,6 @@ const styles = StyleSheet.create({
   },
   priceBadge: {
     height: 32,
-    fontWeight: 'bold',
   },
   titleRight: {
     flexDirection: 'row',
