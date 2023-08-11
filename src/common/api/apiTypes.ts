@@ -18,3 +18,6 @@ export type ProductsResponse = {
   skip: number;
   offset: number;
 };
+
+export type Category = string;
+export type CategoriesResponse = Category[];
