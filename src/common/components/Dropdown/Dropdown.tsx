@@ -37,7 +37,7 @@ export const Dropdown = ({options, onSelect, placeholder}: DropdownProps) => {
       anchor={
         <Button
           onPress={handleOpenMenu}
-          mode="contained"
+          mode="outlined"
           icon="menu-down"
           contentStyle={{flexDirection: 'row-reverse'}}>
           {chosenOption?.label || placeholder}
