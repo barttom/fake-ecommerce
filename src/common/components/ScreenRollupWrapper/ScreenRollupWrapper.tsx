@@ -1,7 +1,7 @@
 import React, {ReactNode, useRef} from 'react';
 import {Animated, StyleSheet, View} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
-import {useTheme} from 'react-native-paper';
+import {ActivityIndicator, useTheme} from 'react-native-paper';
 
 export type ScreenRollupWrapperProps = {
   children: ReactNode;
@@ -9,6 +9,7 @@ export type ScreenRollupWrapperProps = {
   initialSize?: number;
   backgroundColor?: string;
   animationColor?: string;
+  isLoading?: boolean;
 };
 const FADE_IN_DURATION = 200;
 
@@ -18,6 +19,7 @@ export const ScreenRollupWrapper = ({
   initialSize = 10,
   backgroundColor,
   animationColor,
+  isLoading = false,
 }: ScreenRollupWrapperProps) => {
   const animatedWidth = useRef(new Animated.Value(initialSize)).current;
   const animatedHeight = useRef(new Animated.Value(initialSize)).current;
@@ -26,23 +28,25 @@ export const ScreenRollupWrapper = ({
   const {colors} = useTheme();
 
   useFocusEffect(() => {
-    Animated.sequence([
-      Animated.timing(animatedWidth, {
-        toValue: 100,
-        useNativeDriver: false,
-        duration,
-      }),
-      Animated.timing(animatedHeight, {
-        toValue: 100,
-        useNativeDriver: false,
-        duration,
-      }),
-      Animated.timing(animatedOpacity, {
-        toValue: 1,
-        duration: FADE_IN_DURATION,
-        useNativeDriver: false,
-      }),
-    ]).start();
+    if (!isLoading && children) {
+      Animated.sequence([
+        Animated.timing(animatedWidth, {
+          toValue: 100,
+          useNativeDriver: false,
+          duration,
+        }),
+        Animated.timing(animatedHeight, {
+          toValue: 100,
+          useNativeDriver: false,
+          duration,
+        }),
+        Animated.timing(animatedOpacity, {
+          toValue: 1,
+          duration: FADE_IN_DURATION,
+          useNativeDriver: false,
+        }),
+      ]).start();
+    }
 
     return () => {
       animatedWidth.setValue(initialSize);
@@ -50,6 +54,14 @@ export const ScreenRollupWrapper = ({
       animatedOpacity.setValue(0);
     };
   });
+
+  if (isLoading) {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size={50} />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>

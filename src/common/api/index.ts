@@ -1,5 +1,9 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import {ProductsResponse} from './apiTypes';
+import {
+  CategoriesResponse,
+  ProductsRequestParams,
+  ProductsResponse,
+} from './apiTypes';
 
 const ROOT_API_URL = 'https://dummyjson.com/';
 
@@ -7,10 +11,21 @@ export const rootApi = createApi({
   reducerPath: 'rootApi',
   baseQuery: fetchBaseQuery({baseUrl: ROOT_API_URL}),
   endpoints: build => ({
-    allProducts: build.query<ProductsResponse, void>({
-      query: () => `products`,
+    allProducts: build.query<ProductsResponse, ProductsRequestParams>({
+      query: ({category, skip, limit}) => {
+        const baseUrl = `products${category ? `/category/${category}` : ''}`;
+
+        return `${baseUrl}?limit=${limit}&skip=${skip}`;
+      },
+    }),
+    categories: build.query<CategoriesResponse, void>({
+      query: () => 'products/categories',
     }),
   }),
 });
 
-export const {useAllProductsQuery} = rootApi;
+export const {
+  useAllProductsQuery,
+  useCategoriesQuery,
+  useLazyAllProductsQuery,
+} = rootApi;
