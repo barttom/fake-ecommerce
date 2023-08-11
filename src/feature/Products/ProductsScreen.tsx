@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {FlatList, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import {DataTable, Text} from 'react-native-paper';
 import {ScreenRollupWrapper} from '../../common/components/ScreenRollupWrapper';
 import {useCategoriesQuery, useLazyAllProductsQuery} from '../../common/api';
@@ -59,16 +59,18 @@ export const ProductsScreen = () => {
     });
   }, [filters]);
 
+  if (!productsData || productsData?.products.length === 0) {
+    return (
+      <View style={styles.nodataContainer}>
+        <Text variant="headlineLarge">¯\_(ツ)_/¯</Text>
+      </View>
+    );
+  }
+
   return (
     <>
       {categories && (
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-            margin: 16,
-          }}>
+        <View style={styles.filtersContainer}>
           <Text variant="titleMedium">Category: </Text>
           <Dropdown
             options={mapStringArrayToOptions(categories)}
@@ -91,3 +93,17 @@ export const ProductsScreen = () => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  nodataContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  filtersContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    margin: 16,
+  },
+});
