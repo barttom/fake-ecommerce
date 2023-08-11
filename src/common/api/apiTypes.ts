@@ -12,11 +12,17 @@ export type Product = {
   images: string[];
 };
 
+export type ProductsRequestParams = {
+  category: string;
+  skip: number;
+  limit: number;
+};
+
 export type ProductsResponse = {
   products: Product[];
   limit: number;
   skip: number;
-  offset: number;
+  total: number;
 };
 
 export type Category = string;
