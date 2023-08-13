@@ -1,16 +1,17 @@
 import {NativeStackScreenProps} from 'react-native-screens/native-stack';
+import {Product} from '../../api/apiTypes';
 
 export type RootStackParamList = {
   Home: undefined;
   SingleProduct: {
-    productId: number;
+    productId: Product['id'];
   };
 };
 export type HomeScreenParams = NativeStackScreenProps<
   RootStackParamList,
   'Home'
 >;
-export type SingleProductScreenParams = NativeStackScreenProps<
+export type SingleProductScreenProps = NativeStackScreenProps<
   RootStackParamList,
   'SingleProduct'
 >;

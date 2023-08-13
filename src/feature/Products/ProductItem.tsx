@@ -3,7 +3,7 @@ import {Card, Chip, IconButton} from 'react-native-paper';
 import {StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Product} from '../../common/api/apiTypes';
-import {SingleProductScreenParams} from '../../common/components/Navigator';
+import {SingleProductScreenProps} from '../../common/components/Navigator';
 
 export type ProductItemProps = Pick<
   Product,
@@ -16,7 +16,7 @@ export const ProductItem = ({
   price,
   id,
 }: ProductItemProps) => {
-  const {navigate} = useNavigation<SingleProductScreenParams['navigation']>();
+  const {navigate} = useNavigation<SingleProductScreenProps['navigation']>();
   const handleNavigation = () => {
     navigate('SingleProduct', {productId: id});
   };

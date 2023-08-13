@@ -14,7 +14,13 @@ export const RootNavigator = () => {
         component={TabNavigator}
         options={{headerShown: false}}
       />
-      <Stack.Screen name="SingleProduct" component={SingleProductScreen} />
+      <Stack.Screen
+        name="SingleProduct"
+        component={SingleProductScreen}
+        options={{
+          headerTitle: '',
+        }}
+      />
     </Stack.Navigator>
   );
 };
