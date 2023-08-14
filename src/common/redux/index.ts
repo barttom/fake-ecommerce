@@ -1,9 +1,11 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
-import {authReducer} from '../../feature/Auth';
 import {rootApi} from '../api';
+import {authReducer} from '../../feature/Auth';
+import {cartReducer} from '../../feature/Cart/cartSlice';
 
 const rootReducer = combineReducers({
   authReducer,
+  cartReducer,
   [rootApi.reducerPath]: rootApi.reducer,
 });
 
