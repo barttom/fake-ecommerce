@@ -57,7 +57,7 @@ export const ProductsScreen = () => {
       ...filters,
       limit: QUERY_LIMIT,
     });
-  }, [filters]);
+  }, [filters, fetchProducts]);
 
   if (!productsData || productsData?.products.length === 0) {
     return (

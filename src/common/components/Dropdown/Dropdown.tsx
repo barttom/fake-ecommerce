@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Menu} from 'react-native-paper';
+import {StyleSheet} from 'react-native';
 
 export type DropdownOption = {
   label: string;
@@ -39,7 +40,7 @@ export const Dropdown = ({options, onSelect, placeholder}: DropdownProps) => {
           onPress={handleOpenMenu}
           mode="outlined"
           icon="menu-down"
-          contentStyle={{flexDirection: 'row-reverse'}}>
+          contentStyle={styles.trigger}>
           {chosenOption?.label || placeholder}
         </Button>
       }>
@@ -53,3 +54,9 @@ export const Dropdown = ({options, onSelect, placeholder}: DropdownProps) => {
     </Menu>
   );
 };
+
+const styles = StyleSheet.create({
+  trigger: {
+    flexDirection: 'row-reverse',
+  },
+});
