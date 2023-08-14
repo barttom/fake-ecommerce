@@ -25,5 +25,7 @@ export type ProductsResponse = {
   total: number;
 };
 
+export type SingleProductResponse = Product;
+
 export type Category = string;
 export type CategoriesResponse = Category[];

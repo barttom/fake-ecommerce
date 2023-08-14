@@ -1,5 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
+import {SingleProductScreen} from '../../../feature/SingleProduct';
 import {TabNavigator} from './TabNavigator';
 import {RootStackParamList} from './index';
 
@@ -12,6 +13,13 @@ export const RootNavigator = () => {
         name="Home"
         component={TabNavigator}
         options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="SingleProduct"
+        component={SingleProductScreen}
+        options={{
+          headerTitle: '',
+        }}
       />
     </Stack.Navigator>
   );
