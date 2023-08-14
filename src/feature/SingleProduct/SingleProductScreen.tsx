@@ -25,7 +25,10 @@ export const SingleProductScreen = () => {
         <ImageSlider images={data?.images || []} />
         <View style={styles.addToCartContainer}>
           <Chip style={styles.stock}>{`${data?.stock} in stock`}</Chip>
-          <CartButton max={data?.stock || 0} />
+          <CartButton
+            maxQuantity={data?.stock || 0}
+            productId={data?.id || 0}
+          />
         </View>
         <Text variant="bodyLarge">{data?.description}</Text>
       </ScrollView>

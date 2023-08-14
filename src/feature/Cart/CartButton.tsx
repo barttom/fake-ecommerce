@@ -1,15 +1,20 @@
 import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Button, FAB, Text, useTheme} from 'react-native-paper';
+import {IconButton, Text, useTheme} from 'react-native-paper';
 
-export type CartButtonProps = {max: number};
+import {Product} from '../../common/api/apiTypes';
+import {useAppDispatch} from '../../common/redux';
+import {addItemToCart} from './cartSlice';
 
-export const CartButton = ({max}: CartButtonProps) => {
-  const [quantity, setQuantity] = useState(max > 0 ? 1 : 0);
+export type CartButtonProps = {maxQuantity: number; productId: Product['id']};
+
+export const CartButton = ({maxQuantity, productId}: CartButtonProps) => {
+  const [quantity, setQuantity] = useState(maxQuantity > 0 ? 1 : 0);
   const {colors} = useTheme();
+  const dispatch = useAppDispatch();
 
   const handleIncrease = () => {
-    if (quantity < max) {
+    if (quantity < maxQuantity) {
       setQuantity(quantity + 1);
     }
   };
@@ -18,33 +23,47 @@ export const CartButton = ({max}: CartButtonProps) => {
       setQuantity(quantity - 1);
     }
   };
-  const handleAddToCart = () => {};
+  const handleAddToCart = () => {
+    dispatch(
+      addItemToCart({
+        productId,
+        quantity,
+      }),
+    );
+  };
 
   return (
     <View style={styles.container}>
-      <View
-        style={[
-          styles.container,
-          styles.quantityContainer,
-          {backgroundColor: colors.surface},
-        ]}>
-        <FAB
+      <View style={[styles.container, styles.quantityContainer]}>
+        <IconButton
           icon="minus"
           onPress={handleDecrease}
-          size="small"
-          variant="surface"
+          mode="contained"
+          disabled={quantity === 0}
         />
-        <Text style={[styles.quantity]}>{quantity}</Text>
-        <FAB
+        <Text
+          variant="titleMedium"
+          style={[
+            styles.quantity,
+            {backgroundColor: colors.surface, color: colors.onSurface},
+          ]}>
+          {quantity}
+        </Text>
+        <IconButton
           icon="plus"
           onPress={handleIncrease}
-          size="small"
-          variant="surface"
+          mode="contained"
+          disabled={quantity === maxQuantity}
         />
       </View>
-      <Button icon="cart-plus" mode="contained" onPress={handleAddToCart}>
-        Add
-      </Button>
+      <IconButton
+        icon="cart-plus"
+        mode="contained"
+        disabled={quantity === 0}
+        containerColor={colors.primary}
+        iconColor={colors.onPrimary}
+        onPress={handleAddToCart}
+      />
     </View>
   );
 };
@@ -57,11 +76,12 @@ const styles = StyleSheet.create({
   },
   quantityContainer: {
     borderRadius: 16,
-    marginRight: 8,
   },
   quantity: {
     paddingHorizontal: 8,
     textAlign: 'center',
     minWidth: 40,
+    height: 40,
+    lineHeight: 40,
   },
 });

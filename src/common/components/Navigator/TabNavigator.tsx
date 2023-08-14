@@ -5,6 +5,7 @@ import {ProductsScreen} from '../../../feature/Products/';
 import {CartScreen} from '../../../feature/Cart/';
 import {SettingsScreen} from '../../../feature/Settings/';
 import {TabStackParamList} from './navigatorTypes';
+import {CartNavigationIcon} from './CartNavigationIcon';
 
 const TabStack = createMaterialBottomTabNavigator<TabStackParamList>();
 
@@ -24,9 +25,7 @@ export const TabNavigator = () => {
         name="Cart"
         component={CartScreen}
         options={{
-          tabBarIcon: ({color}) => (
-            <MaterialIcons name="shopping-basket" color={color} size={24} />
-          ),
+          tabBarIcon: CartNavigationIcon,
         }}
       />
       <TabStack.Screen
