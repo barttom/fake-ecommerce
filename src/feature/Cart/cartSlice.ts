@@ -17,7 +17,7 @@ const authSlice = createSlice({
     addItemToCart: (state, {payload}: PayloadAction<CartItem>) => {
       state.items = [...state.items, payload];
     },
-    removeItemFromCart: (state, {payload}: PayloadAction<Product['id']>) => {
+    removeItemFromCart: (state, {payload}: PayloadAction<CartItem['id']>) => {
       state.items = state.items.filter(item => item.id !== payload);
     },
   },
