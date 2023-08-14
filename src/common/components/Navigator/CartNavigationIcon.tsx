@@ -1,6 +1,7 @@
 import React from 'react';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {StyleSheet} from 'react-native';
 import {Badge} from 'react-native-paper';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import {useAppSelector} from '../../redux';
 import {CartSlice} from '../../../feature/Cart';
@@ -15,11 +16,13 @@ export const CartNavigationIcon = ({color}: CartNavigationIconProps) => {
   return (
     <>
       {!!cartItems.length && (
-        <Badge style={{position: 'absolute', top: -8, right: -12}}>
-          {cartItems.length}
-        </Badge>
+        <Badge style={styles.badge}>{cartItems.length}</Badge>
       )}
       <MaterialIcons name="shopping-basket" color={color} size={24} />
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  badge: {position: 'absolute', top: -8, right: -12},
+});
