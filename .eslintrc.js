@@ -7,4 +7,17 @@ module.exports = {
       {devDependencies: ['**/*.test.tsx']},
     ],
   },
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx', '*.js'],
+      rules: {
+        'react-native/no-raw-text': [
+          2,
+          {
+            skip: ['Button', 'Chip'],
+          },
+        ],
+      },
+    },
+  ],
 };
