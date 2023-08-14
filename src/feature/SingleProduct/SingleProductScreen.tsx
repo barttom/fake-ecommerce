@@ -21,17 +21,24 @@ export const SingleProductScreen = () => {
 
   return (
     <ScreenRollupWrapper isLoading={isLoading}>
-      <ScrollView>
-        <ImageSlider images={data?.images || []} />
-        <View style={styles.addToCartContainer}>
-          <Chip style={styles.stock}>{`${data?.stock} in stock`}</Chip>
-          <CartButton
-            maxQuantity={data?.stock || 0}
-            productId={data?.id || 0}
-          />
-        </View>
-        <Text variant="bodyLarge">{data?.description}</Text>
-      </ScrollView>
+      {data && (
+        <ScrollView>
+          <ImageSlider images={data.images || []} />
+          <View style={styles.addToCartContainer}>
+            <Chip style={styles.stock}>{`${data.stock} in stock`}</Chip>
+            <CartButton
+              maxQuantity={data.stock}
+              cartItem={{
+                id: data.id,
+                stock: data.stock,
+                title: data.title,
+                thumbnail: data.thumbnail,
+              }}
+            />
+          </View>
+          <Text variant="bodyLarge">{data.description}</Text>
+        </ScrollView>
+      )}
     </ScreenRollupWrapper>
   );
 };

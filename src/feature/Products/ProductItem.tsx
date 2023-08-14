@@ -47,7 +47,15 @@ export const ProductItem = ({
           elevation={2}>
           {price}
         </Chip>
-        <CartButton maxQuantity={stock} productId={id} />
+        <CartButton
+          maxQuantity={stock}
+          cartItem={{
+            id,
+            title,
+            thumbnail,
+            stock,
+          }}
+        />
       </Card.Content>
     </Card>
   );

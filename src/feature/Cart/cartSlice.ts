@@ -1,7 +1,9 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {Product} from '../../common/api/apiTypes';
 
-type CartItem = {productId: Product['id']; quantity: number};
+export type CartItem = Pick<Product, 'id' | 'thumbnail' | 'stock' | 'title'> & {
+  quantity: number;
+};
 export type CartSlice = {
   items: Array<CartItem>;
 };
@@ -16,7 +18,7 @@ const authSlice = createSlice({
   reducers: {
     addItemToCart: (state, {payload}: PayloadAction<CartItem>) => {
       const existedItemIndex = state.items.findIndex(
-        ({productId}) => productId === payload.productId,
+        ({id}) => id === payload.id,
       );
       if (existedItemIndex > -1) {
         state.items[existedItemIndex] = payload;
@@ -24,11 +26,8 @@ const authSlice = createSlice({
         state.items = [...state.items, payload];
       }
     },
-    removeItemFromCart: (
-      state,
-      {payload}: PayloadAction<CartItem['productId']>,
-    ) => {
-      state.items = state.items.filter(item => item.productId !== payload);
+    removeItemFromCart: (state, {payload}: PayloadAction<CartItem['id']>) => {
+      state.items = state.items.filter(item => item.id !== payload);
     },
   },
 });

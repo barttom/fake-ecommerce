@@ -2,13 +2,15 @@ import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {IconButton, Text, useTheme} from 'react-native-paper';
 
-import {Product} from '../../common/api/apiTypes';
 import {useAppDispatch} from '../../common/redux';
-import {addItemToCart} from './cartSlice';
+import {addItemToCart, CartItem} from './cartSlice';
 
-export type CartButtonProps = {maxQuantity: number; productId: Product['id']};
+export type CartButtonProps = {
+  maxQuantity: number;
+  cartItem: Omit<CartItem, 'quantity'>;
+};
 
-export const CartButton = ({maxQuantity, productId}: CartButtonProps) => {
+export const CartButton = ({maxQuantity, cartItem}: CartButtonProps) => {
   const [quantity, setQuantity] = useState(maxQuantity > 0 ? 1 : 0);
   const {colors} = useTheme();
   const dispatch = useAppDispatch();
@@ -26,7 +28,7 @@ export const CartButton = ({maxQuantity, productId}: CartButtonProps) => {
   const handleAddToCart = () => {
     dispatch(
       addItemToCart({
-        productId,
+        ...cartItem,
         quantity,
       }),
     );
