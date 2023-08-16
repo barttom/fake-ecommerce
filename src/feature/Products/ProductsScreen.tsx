@@ -60,7 +60,7 @@ export const ProductsScreen = () => {
     });
   }, [filters, fetchProducts]);
 
-  if (!productsData || productsData?.products.length === 0) {
+  if ((!isLoading && !productsData) || productsData?.products.length === 0) {
     return (
       <View style={styles.nodataContainer}>
         <Text variant="headlineLarge">¯\_(ツ)_/¯</Text>
