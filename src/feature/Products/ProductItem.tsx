@@ -1,13 +1,14 @@
 import React from 'react';
-import {Card, Chip, IconButton} from 'react-native-paper';
+import {Card, Chip} from 'react-native-paper';
 import {StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Product} from '../../common/api/apiTypes';
 import {SingleProductScreenProps} from '../../common/components/Navigator';
+import {AddToCartButton} from '../Cart';
 
 export type ProductItemProps = Pick<
   Product,
-  'id' | 'title' | 'price' | 'thumbnail'
+  'id' | 'title' | 'price' | 'thumbnail' | 'stock'
 >;
 
 export const ProductItem = ({
@@ -15,6 +16,7 @@ export const ProductItem = ({
   title,
   price,
   id,
+  stock,
 }: ProductItemProps) => {
   const {navigate} = useNavigation<SingleProductScreenProps['navigation']>();
   const handleNavigation = () => {
@@ -45,7 +47,15 @@ export const ProductItem = ({
           elevation={2}>
           {price}
         </Chip>
-        <IconButton icon="cart-plus" mode="outlined" />
+        <AddToCartButton
+          cartItem={{
+            id,
+            title,
+            thumbnail,
+            stock,
+            price,
+          }}
+        />
       </Card.Content>
     </Card>
   );

@@ -39,12 +39,13 @@ export const ProductsScreen = () => {
       <FlatList
         data={productsData?.products}
         keyExtractor={({id}) => id.toString()}
-        renderItem={({item: {title, thumbnail, price, id}}) => (
+        renderItem={({item: {title, thumbnail, price, id, stock}}) => (
           <ProductItem
+            id={id}
             title={title}
             thumbnail={thumbnail}
             price={price}
-            id={id}
+            stock={stock}
           />
         )}
       />
@@ -59,7 +60,7 @@ export const ProductsScreen = () => {
     });
   }, [filters, fetchProducts]);
 
-  if (!productsData || productsData?.products.length === 0) {
+  if ((!isLoading && !productsData) || productsData?.products.length === 0) {
     return (
       <View style={styles.nodataContainer}>
         <Text variant="headlineLarge">¯\_(ツ)_/¯</Text>
