@@ -48,7 +48,6 @@ export const ProductItem = ({
           {price}
         </Chip>
         <CartButton
-          maxQuantity={stock}
           cartItem={{
             id,
             title,

@@ -4,14 +4,12 @@ import {Badge} from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import {useAppSelector} from '../../redux';
-import {CartSlice} from '../../../feature/Cart';
+import {selectCartItems} from '../../../feature/Cart';
 
 export type CartNavigationIconProps = {color: string};
 
 export const CartNavigationIcon = ({color}: CartNavigationIconProps) => {
-  const cartItems = useAppSelector<CartSlice['items']>(
-    state => state.cartReducer.items,
-  );
+  const cartItems = useAppSelector(selectCartItems);
 
   return (
     <>

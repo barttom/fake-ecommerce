@@ -27,7 +27,6 @@ export const SingleProductScreen = () => {
           <View style={styles.addToCartContainer}>
             <Chip style={styles.stock}>{`${data.stock} in stock`}</Chip>
             <CartButton
-              maxQuantity={data.stock}
               cartItem={{
                 id: data.id,
                 stock: data.stock,

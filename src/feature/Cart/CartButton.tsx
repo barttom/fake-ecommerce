@@ -2,16 +2,24 @@ import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {IconButton, Text, useTheme} from 'react-native-paper';
 
-import {useAppDispatch} from '../../common/redux';
+import {useAppDispatch, useAppSelector} from '../../common/redux';
 import {addItemToCart, CartItem} from './cartSlice';
+import {selectCartItems} from './cartSelectors';
 
 export type CartButtonProps = {
-  maxQuantity: number;
   cartItem: Omit<CartItem, 'quantity'>;
 };
 
-export const CartButton = ({maxQuantity, cartItem}: CartButtonProps) => {
-  const [quantity, setQuantity] = useState(maxQuantity > 0 ? 1 : 0);
+export const CartButton = ({cartItem}: CartButtonProps) => {
+  const {stock} = cartItem;
+  const cartItems = useAppSelector(selectCartItems);
+  const existedQuantity =
+    cartItems.find(({id}) => id === cartItem.id)?.quantity || 0;
+
+  const maxQuantity = stock - existedQuantity;
+  const [quantity, setQuantity] = useState(
+    existedQuantity || maxQuantity > 0 ? 1 : 0,
+  );
   const {colors} = useTheme();
   const dispatch = useAppDispatch();
 
