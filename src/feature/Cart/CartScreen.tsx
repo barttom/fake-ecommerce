@@ -1,15 +1,26 @@
 import React from 'react';
-import {Text} from 'react-native-paper';
+import {FlatList} from 'react-native';
 import {ScreenRollupWrapper} from '../../common/components/ScreenRollupWrapper';
 import {useAppSelector} from '../../common/redux';
 import {selectCartItems} from './cartSelectors';
+import {CartListItem} from './CartListItem';
+
+const CartList = () => {
+  const cartItems = useAppSelector(selectCartItems);
+
+  return (
+    <FlatList
+      data={cartItems}
+      renderItem={({item}) => <CartListItem data={item} />}
+      keyExtractor={({id}) => id.toString()}
+    />
+  );
+};
 
 export const CartScreen = () => {
-  const cartItems = useAppSelector(selectCartItems);
-  console.log(cartItems);
   return (
     <ScreenRollupWrapper>
-      <Text>Cart</Text>
+      <CartList />
     </ScreenRollupWrapper>
   );
 };

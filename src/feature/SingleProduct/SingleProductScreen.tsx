@@ -6,7 +6,7 @@ import {SingleProductScreenProps} from '../../common/components/Navigator';
 import {useSingleProductQuery} from '../../common/api';
 import {ScreenRollupWrapper} from '../../common/components/ScreenRollupWrapper';
 import {ImageSlider} from '../../common/components/ImageSlider';
-import {CartButton} from '../Cart';
+import {AddToCartButton} from '../Cart';
 
 export const SingleProductScreen = () => {
   const {params} = useRoute<SingleProductScreenProps['route']>();
@@ -26,12 +26,13 @@ export const SingleProductScreen = () => {
           <ImageSlider images={data.images || []} />
           <View style={styles.addToCartContainer}>
             <Chip style={styles.stock}>{`${data.stock} in stock`}</Chip>
-            <CartButton
+            <AddToCartButton
               cartItem={{
                 id: data.id,
                 stock: data.stock,
                 title: data.title,
                 thumbnail: data.thumbnail,
+                price: data.price,
               }}
             />
           </View>

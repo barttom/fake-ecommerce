@@ -1,7 +1,10 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {Product} from '../../common/api/apiTypes';
 
-export type CartItem = Pick<Product, 'id' | 'thumbnail' | 'stock' | 'title'> & {
+export type CartItem = Pick<
+  Product,
+  'id' | 'thumbnail' | 'stock' | 'title' | 'price'
+> & {
   quantity: number;
 };
 export type CartSlice = {
@@ -20,6 +23,7 @@ const authSlice = createSlice({
       const existedItemIndex = state.items.findIndex(
         ({id}) => id === payload.id,
       );
+
       if (existedItemIndex > -1) {
         state.items[existedItemIndex] = payload;
       } else {

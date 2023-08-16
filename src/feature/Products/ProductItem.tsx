@@ -4,7 +4,7 @@ import {StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Product} from '../../common/api/apiTypes';
 import {SingleProductScreenProps} from '../../common/components/Navigator';
-import {CartButton} from '../Cart';
+import {AddToCartButton} from '../Cart';
 
 export type ProductItemProps = Pick<
   Product,
@@ -47,12 +47,13 @@ export const ProductItem = ({
           elevation={2}>
           {price}
         </Chip>
-        <CartButton
+        <AddToCartButton
           cartItem={{
             id,
             title,
             thumbnail,
             stock,
+            price,
           }}
         />
       </Card.Content>
