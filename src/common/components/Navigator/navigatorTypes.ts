@@ -6,6 +6,7 @@ export type RootStackParamList = {
   SingleProduct: {
     productId: Product['id'];
   };
+  Checkout: undefined;
 };
 export type HomeScreenParams = NativeStackScreenProps<
   RootStackParamList,
@@ -25,7 +26,11 @@ export type ProductsScreenProps = NativeStackScreenProps<
   TabStackParamList,
   'Products'
 >;
-export type CartScreenProps = NativeStackScreenProps<TabStackParamList, 'Cart'>;
+export type CartScreenProps = NativeStackScreenProps<
+  TabStackParamList,
+  'Cart'
+> &
+  HomeScreenParams;
 export type SettingsScreenProps = NativeStackScreenProps<
   TabStackParamList,
   'Settings'

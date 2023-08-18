@@ -1,6 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {SingleProductScreen} from '../../../feature/SingleProduct';
+import {CheckoutScreen} from '../../../feature/Checkout';
 import {TabNavigator} from './TabNavigator';
 import {RootStackParamList} from './index';
 
@@ -19,6 +20,15 @@ export const RootNavigator = () => {
         component={SingleProductScreen}
         options={{
           headerTitle: '',
+        }}
+      />
+      <Stack.Screen
+        name="Checkout"
+        component={CheckoutScreen}
+        options={{
+          headerTitle: 'Checkout',
+          presentation: 'modal',
+          headerShown: false,
         }}
       />
     </Stack.Navigator>

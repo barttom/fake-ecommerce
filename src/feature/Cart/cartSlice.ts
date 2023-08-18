@@ -33,10 +33,13 @@ const authSlice = createSlice({
     removeItemFromCart: (state, {payload}: PayloadAction<CartItem['id']>) => {
       state.items = state.items.filter(item => item.id !== payload);
     },
+    clearCart: state => {
+      state.items = [];
+    },
   },
 });
 
 export const {
-  actions: {addItemToCart, removeItemFromCart},
+  actions: {addItemToCart, removeItemFromCart, clearCart},
   reducer: cartReducer,
 } = authSlice;
