@@ -16,10 +16,7 @@ export const CheckoutConfirmMessage = () => {
     <View style={styles.wrapper}>
       <Text variant="headlineMedium">Your order has been finished</Text>
       <LottieView
-        style={{
-          width: '100%',
-          height: '50%',
-        }}
+        style={styles.animation}
         source={checkmarkAnimation}
         loop
         autoPlay
@@ -35,5 +32,9 @@ const styles = StyleSheet.create({
   wrapper: {
     justifyContent: 'space-between',
     flex: 1,
+  },
+  animation: {
+    width: '100%',
+    height: '50%',
   },
 });
