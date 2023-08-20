@@ -19,7 +19,7 @@ const authSlice = createSlice({
   name: 'cart',
   initialState: initialCartState,
   reducers: {
-    addItemToCart: (state, {payload}: PayloadAction<CartItem>) => {
+    addOrEditCartItem: (state, {payload}: PayloadAction<CartItem>) => {
       const existedItemIndex = state.items.findIndex(
         ({id}) => id === payload.id,
       );
@@ -40,6 +40,6 @@ const authSlice = createSlice({
 });
 
 export const {
-  actions: {addItemToCart, removeItemFromCart, clearCart},
+  actions: {addOrEditCartItem, removeItemFromCart, clearCart},
   reducer: cartReducer,
 } = authSlice;

@@ -52,12 +52,12 @@ export const StockStatus = ({quantity}: StockStatusProps) => {
 };
 const styles = StyleSheet.create({
   progress: {
-    width: 120,
+    width: 110,
     height: 5,
+    marginLeft: 10,
   },
   icon: {
     position: 'absolute',
-    left: -12,
     top: -10,
     zIndex: 10,
   },

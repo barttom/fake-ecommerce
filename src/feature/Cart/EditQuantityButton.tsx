@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import {IconButton} from 'react-native-paper';
 import {QuantityInput} from '../../common/components/QuantityInput';
 import {useAppDispatch} from '../../common/redux';
-import {addItemToCart, CartItem, removeItemFromCart} from './cartSlice';
+import {addOrEditCartItem, CartItem, removeItemFromCart} from './cartSlice';
 
 export type EditQuantityButtonProps = {cartItem: CartItem};
 
@@ -18,7 +18,7 @@ export const EditQuantityButton = ({cartItem}: EditQuantityButtonProps) => {
       handleRemove();
     } else {
       dispatch(
-        addItemToCart({
+        addOrEditCartItem({
           ...cartItem,
           quantity: quantity - 1,
         }),
@@ -27,7 +27,7 @@ export const EditQuantityButton = ({cartItem}: EditQuantityButtonProps) => {
   };
   const handleIncrease = () => {
     dispatch(
-      addItemToCart({
+      addOrEditCartItem({
         ...cartItem,
         quantity: quantity + 1,
       }),
@@ -44,6 +44,7 @@ export const EditQuantityButton = ({cartItem}: EditQuantityButtonProps) => {
         onIncrease={handleIncrease}
         onDecrease={handleDecrease}
         maxValue={stock - quantity}
+        minValue={1}
       />
       <IconButton
         icon="trash-can-outline"

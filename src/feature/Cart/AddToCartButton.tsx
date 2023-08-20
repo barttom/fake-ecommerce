@@ -4,7 +4,7 @@ import {IconButton, useTheme} from 'react-native-paper';
 
 import {useAppDispatch, useAppSelector} from '../../common/redux';
 import {QuantityInput} from '../../common/components/QuantityInput';
-import {addItemToCart, CartItem} from './cartSlice';
+import {addOrEditCartItem, CartItem} from './cartSlice';
 import {selectCartItems} from './cartSelectors';
 
 export type AddToCartButtonProps = {
@@ -18,8 +18,7 @@ export const AddToCartButton = ({cartItem}: AddToCartButtonProps) => {
     cartItems.find(({id}) => id === cartItem.id)?.quantity || 0;
 
   const maxQuantity = stock - existedQuantity;
-  const initialQuantity = maxQuantity > 0 ? 1 : 0;
-  const [quantity, setQuantity] = useState(initialQuantity);
+  const [quantity, setQuantity] = useState(existedQuantity || 1);
   const {colors} = useTheme();
   const dispatch = useAppDispatch();
 
@@ -31,22 +30,21 @@ export const AddToCartButton = ({cartItem}: AddToCartButtonProps) => {
   };
   const handleAddToCart = () => {
     dispatch(
-      addItemToCart({
+      addOrEditCartItem({
         ...cartItem,
-        quantity: quantity + existedQuantity,
+        quantity,
       }),
     );
-
-    setQuantity(initialQuantity);
   };
 
-  return (
+  return stock > 0 ? (
     <View style={styles.container}>
       <QuantityInput
         value={quantity}
         onIncrease={handleIncrease}
         onDecrease={handleDecrease}
         maxValue={maxQuantity}
+        minValue={1}
       />
       <IconButton
         icon="cart-plus"
@@ -57,7 +55,7 @@ export const AddToCartButton = ({cartItem}: AddToCartButtonProps) => {
         onPress={handleAddToCart}
       />
     </View>
-  );
+  ) : null;
 };
 
 const styles = StyleSheet.create({
