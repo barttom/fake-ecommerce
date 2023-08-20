@@ -6,6 +6,7 @@ import {useCategoriesQuery, useLazyAllProductsQuery} from '../../common/api';
 import {Dropdown, DropdownOption} from '../../common/components/Dropdown';
 import {mapStringArrayToOptions} from '../../common/utils/helpers';
 import {ProductsRequestParams} from '../../common/api/apiTypes';
+import {NoDataPlaceholder} from '../../common/components/NoDataPlaceholder';
 import {ProductItem} from './ProductItem';
 
 const QUERY_LIMIT = 15;
@@ -61,11 +62,7 @@ export const ProductsScreen = () => {
   }, [filters, fetchProducts]);
 
   if ((!isLoading && !productsData) || productsData?.products.length === 0) {
-    return (
-      <View style={styles.nodataContainer}>
-        <Text variant="headlineLarge">¯\_(ツ)_/¯</Text>
-      </View>
-    );
+    return <NoDataPlaceholder message="No products with chosen criteria" />;
   }
 
   return (
@@ -96,11 +93,6 @@ export const ProductsScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  nodataContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   filtersContainer: {
     flexDirection: 'row',
     alignItems: 'center',
