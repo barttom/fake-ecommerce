@@ -9,9 +9,13 @@ import {selectCartItems} from './cartSelectors';
 
 export type AddToCartButtonProps = {
   cartItem: Omit<CartItem, 'quantity'>;
+  onAddToCart: () => void;
 };
 
-export const AddToCartButton = ({cartItem}: AddToCartButtonProps) => {
+export const AddToCartButton = ({
+  cartItem,
+  onAddToCart,
+}: AddToCartButtonProps) => {
   const {stock} = cartItem;
   const cartItems = useAppSelector(selectCartItems);
   const existedQuantity =
@@ -35,6 +39,7 @@ export const AddToCartButton = ({cartItem}: AddToCartButtonProps) => {
         quantity,
       }),
     );
+    onAddToCart();
   };
 
   return stock > 0 ? (
