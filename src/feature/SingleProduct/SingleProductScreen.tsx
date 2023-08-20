@@ -1,12 +1,9 @@
 import React, {useEffect} from 'react';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {Chip, Text} from 'react-native-paper';
-import {ScrollView, StyleSheet, View} from 'react-native';
 import {SingleProductScreenProps} from '../../common/components/Navigator';
 import {useSingleProductQuery} from '../../common/api';
 import {ScreenRollupWrapper} from '../../common/components/ScreenRollupWrapper';
-import {ImageSlider} from '../../common/components/ImageSlider';
-import {AddToCartButton} from '../Cart';
+import {SingleProduct} from './SingleProduct';
 
 export const SingleProductScreen = () => {
   const {params} = useRoute<SingleProductScreenProps['route']>();
@@ -14,42 +11,14 @@ export const SingleProductScreen = () => {
   const {data, isLoading} = useSingleProductQuery(params.productId);
 
   useEffect(() => {
-    setOptions({headerTitle: data?.title});
+    setOptions({headerTitle: data?.title || ''});
 
-    return () => setOptions({headerRTitle: ''});
+    return () => setOptions({headerTitle: ''});
   }, [data, setOptions]);
 
   return (
     <ScreenRollupWrapper isLoading={isLoading}>
-      {data && (
-        <ScrollView>
-          <ImageSlider images={data.images || []} />
-          <View style={styles.addToCartContainer}>
-            <Chip style={styles.stock}>{`${data.stock} in stock`}</Chip>
-            <AddToCartButton
-              cartItem={{
-                id: data.id,
-                stock: data.stock,
-                title: data.title,
-                thumbnail: data.thumbnail,
-                price: data.price,
-              }}
-            />
-          </View>
-          <Text variant="bodyLarge">{data.description}</Text>
-        </ScrollView>
-      )}
+      {data && <SingleProduct data={data} />}
     </ScreenRollupWrapper>
   );
 };
-
-const styles = StyleSheet.create({
-  addToCartContainer: {
-    flexDirection: 'row',
-    marginBottom: 8,
-    justifyContent: 'space-between',
-  },
-  stock: {
-    width: 120,
-  },
-});
