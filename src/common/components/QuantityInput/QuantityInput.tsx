@@ -37,13 +37,16 @@ export const QuantityInput = ({
         onPress={handleDecrease}
         mode="contained"
         disabled={value === minValue}
+        accessibilityLabel="Decrease quantity button"
       />
       <Text
         variant="titleMedium"
         style={[
           styles.quantity,
           {backgroundColor: colors.surface, color: colors.onSurface},
-        ]}>
+        ]}
+        accessibilityLabel="Quantity value"
+        accessibilityValue={{min: minValue, now: value, max: maxValue}}>
         {value}
       </Text>
       <IconButton
@@ -51,6 +54,7 @@ export const QuantityInput = ({
         onPress={handleIncrease}
         mode="contained"
         disabled={value === maxValue}
+        accessibilityLabel="Increase quantity button"
       />
     </View>
   );

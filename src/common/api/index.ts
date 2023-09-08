@@ -7,7 +7,7 @@ import {
   SingleProductResponse,
 } from './apiTypes';
 
-const ROOT_API_URL = 'https://dummyjson.com/';
+export const ROOT_API_URL = 'https://dummyjson.com/';
 
 export const rootApi = createApi({
   reducerPath: 'rootApi',

@@ -14,18 +14,24 @@ export const ImageSlider = ({images}: ImageSliderProps) => {
       horizontal
       pagingEnabled
       data={images}
-      renderItem={({item}) => (
-        <View style={styles.slide}>
-          <Image
-            style={styles.image}
-            source={{
-              uri: item,
-            }}
-            resizeMode="contain"
-            accessibilityIgnoresInvertColors
-          />
-        </View>
-      )}
+      renderItem={({item, index}) => {
+        const label = `Image number: ${index + 1} in gallery`;
+
+        return (
+          <View style={styles.slide}>
+            <Image
+              style={styles.image}
+              source={{
+                uri: item,
+              }}
+              alt={label}
+              accessibilityLabel={label}
+              resizeMode="contain"
+              accessibilityIgnoresInvertColors
+            />
+          </View>
+        );
+      }}
     />
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Card, Chip} from 'react-native-paper';
-import {StyleSheet} from 'react-native';
+import {Pressable, StyleSheet, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Product} from '../../common/api/apiTypes';
 import {SingleProductScreenProps} from '../../common/components/Navigator';
@@ -23,40 +23,45 @@ export const ProductItem = ({
     navigate('SingleProduct', {productId: id});
   };
   return (
-    <Card
-      mode="elevated"
-      style={styles.card}
-      accessible
-      onPress={handleNavigation}>
-      <Card.Cover
-        source={{uri: thumbnail}}
-        theme={{
-          roundness: 0,
-        }}
-      />
-      <Card.Title
-        titleVariant="titleMedium"
-        title={title.toUpperCase()}
-        rightStyle={styles.titleRight}
-      />
-      <Card.Content style={styles.titleRight}>
-        <Chip
-          icon="currency-usd"
-          style={styles.priceBadge}
-          elevated
-          elevation={2}>
-          {price}
-        </Chip>
-        <StockStatus quantity={stock} />
-      </Card.Content>
-    </Card>
+    <View style={styles.wrapper}>
+      <Pressable
+        accessibilityRole="button"
+        onPress={handleNavigation}
+        accessibilityLabel={`Product: ${title}`}>
+        <Card mode="elevated" style={styles.card}>
+          <Card.Cover
+            source={{uri: thumbnail}}
+            theme={{
+              roundness: 0,
+            }}
+          />
+          <Card.Title
+            titleVariant="titleMedium"
+            title={title.toUpperCase()}
+            rightStyle={styles.titleRight}
+          />
+          <Card.Content style={styles.titleRight}>
+            <Chip
+              icon="currency-usd"
+              style={styles.priceBadge}
+              elevated
+              elevation={2}>
+              {price}
+            </Chip>
+            <StockStatus quantity={stock} />
+          </Card.Content>
+        </Card>
+      </Pressable>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    overflow: 'hidden',
+  },
   card: {
     marginBottom: 16,
-    overflow: 'hidden',
   },
   priceBadge: {
     height: 32,

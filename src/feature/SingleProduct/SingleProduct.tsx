@@ -9,7 +9,7 @@ import {AddToCartButton} from '../Cart';
 import {StockStatus} from '../../common/components/StockStatus';
 
 export const SingleProduct = ({data}: {data: Product}) => {
-  const snackbarTimeoutId = useRef(0);
+  const snackbarTimeoutId = useRef<ReturnType<typeof setTimeout>>();
   const {navigate} = useNavigation<CartScreenProps['navigation']>();
 
   const [isCartInfoVisible, setIsCartInfoVisible] = useState(false);
@@ -18,17 +18,17 @@ export const SingleProduct = ({data}: {data: Product}) => {
 
   useEffect(() => {
     if (isCartInfoVisible) {
-      clearTimeout(snackbarTimeoutId.current);
+      clearTimeout(snackbarTimeoutId.current as number);
       snackbarTimeoutId.current = setTimeout(hideCartInfo, 5000);
     }
-    return () => clearTimeout(snackbarTimeoutId.current);
+    return () => clearTimeout(snackbarTimeoutId.current as number);
   }, [isCartInfoVisible]);
 
   return (
     <>
       {data && (
         <ScrollView>
-          <ImageSlider images={data.images || []} />
+          <ImageSlider images={data.images} />
           <View style={styles.addToCartContainer}>
             <AddToCartButton
               cartItem={{

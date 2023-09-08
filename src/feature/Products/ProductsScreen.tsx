@@ -21,7 +21,7 @@ export const ProductsScreen = () => {
     useLazyAllProductsQuery();
   const {data: categories, isLoading: isCategoriesLoading} =
     useCategoriesQuery();
-
+  const categoriesOptions = mapStringArrayToOptions(categories);
   const handleChoseCategory = (newCategory: DropdownOption['value']) => {
     setFilters({
       category: newCategory as string,
@@ -71,8 +71,9 @@ export const ProductsScreen = () => {
         <View style={styles.filtersContainer}>
           <Text variant="titleMedium">Category: </Text>
           <Dropdown
-            options={mapStringArrayToOptions(categories)}
+            options={categoriesOptions}
             onSelect={handleChoseCategory}
+            initialChosenOption={categoriesOptions[0]}
           />
         </View>
       )}

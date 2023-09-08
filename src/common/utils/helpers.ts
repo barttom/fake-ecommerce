@@ -11,7 +11,7 @@ export const mapStringArrayToOptions = (
     {label: 'All', value: ''},
     ...items.map(item => ({
       label: item.toUpperCase(),
-      value: item,
+      value: item.toLowerCase(),
     })),
   ];
 };

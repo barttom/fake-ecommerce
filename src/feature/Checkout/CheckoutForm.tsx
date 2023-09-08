@@ -22,7 +22,7 @@ const initialErrors = {
 };
 const nameValidator = (value: string) => value.length > 1 && value.length < 101;
 const addressValidator = (value: string) =>
-  value.length > 39 && value.length < 501;
+  value.length > 19 && value.length < 501;
 
 export const CheckoutForm = ({onSubmit}: CheckoutFormProps) => {
   const [name, setName] = useState('');
@@ -40,7 +40,7 @@ export const CheckoutForm = ({onSubmit}: CheckoutFormProps) => {
       : 'Your name should have at least 2 and maximum 100 characters';
     tempErrors.address = isAddressValid
       ? ''
-      : 'Your address should have at least 40 and maximum 500 characters';
+      : 'Your address should have at least 20 and maximum 500 characters';
 
     setErrors(tempErrors);
 
@@ -75,8 +75,10 @@ export const CheckoutForm = ({onSubmit}: CheckoutFormProps) => {
           {errors.address}
         </HelperText>
         <Dropdown
+          label="Delivery type"
           options={deliveryOptions}
           onSelect={newValue => setDeliveryType(newValue as string)}
+          initialChosenOption={deliveryOptions[0]}
         />
       </ScrollView>
       <View style={styles.actions}>
