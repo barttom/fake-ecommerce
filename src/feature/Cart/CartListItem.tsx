@@ -10,7 +10,9 @@ export const CartListItem = ({data}: CartListItemProps) => {
   const {title, thumbnail, price, quantity} = data;
 
   return (
-    <View style={[styles.inline, styles.container]}>
+    <View
+      style={[styles.inline, styles.container]}
+      accessibilityLabel={`Cart item: ${title}`}>
       <Image
         style={styles.image}
         source={{uri: thumbnail}}

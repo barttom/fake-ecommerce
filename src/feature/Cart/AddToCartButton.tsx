@@ -17,7 +17,7 @@ export const AddToCartButton = ({
   onAddToCart,
 }: AddToCartButtonProps) => {
   const {stock} = cartItem;
-  const cartItems = useAppSelector(selectCartItems);
+  const cartItems: CartItem[] = useAppSelector(selectCartItems);
   const existedQuantity =
     cartItems.find(({id}) => id === cartItem.id)?.quantity || 0;
 
@@ -58,6 +58,7 @@ export const AddToCartButton = ({
         containerColor={colors.primary}
         iconColor={colors.onPrimary}
         onPress={handleAddToCart}
+        accessibilityLabel="Add to cart"
       />
     </View>
   ) : null;

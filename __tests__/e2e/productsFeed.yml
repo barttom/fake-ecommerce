@@ -1,0 +1,17 @@
+appId: com.fakeecommerce
+---
+- launchApp
+- waitForAnimationToEnd:
+      timeout: 5000
+- scroll
+- tapOn: "chevron-right"
+- scroll
+- tapOn: "All"
+- tapOn: "LAPTOPS"
+- swipe:
+    start: "49%,21%"
+    end: "51%,64%"
+    duration: 100
+- tapOn:
+    id: "card"
+    index: 0

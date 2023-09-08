@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {Button, Menu} from 'react-native-paper';
+import React, {useState} from 'react';
+import {Button, Menu, Text} from 'react-native-paper';
 import {StyleSheet} from 'react-native';
 
 export type DropdownOption = {
@@ -10,12 +10,20 @@ export type DropdownProps = {
   placeholder?: string;
   options: Array<DropdownOption>;
   onSelect: (chosenOption: DropdownOption['value']) => void;
+  label?: string;
+  initialChosenOption?: DropdownOption;
 };
 
-export const Dropdown = ({options, onSelect, placeholder}: DropdownProps) => {
+export const Dropdown = ({
+  options,
+  onSelect,
+  placeholder,
+  label,
+  initialChosenOption,
+}: DropdownProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const [chosenOption, setChosenOption] = useState<DropdownOption | null>(
-    options.length ? options[0] : null,
+    initialChosenOption || null,
   );
   const handleCloseMenu = () => setIsVisible(false);
   const handleOpenMenu = () => setIsVisible(true);
@@ -24,34 +32,45 @@ export const Dropdown = ({options, onSelect, placeholder}: DropdownProps) => {
     setChosenOption(option);
     handleCloseMenu();
   };
-
-  useEffect(() => {
-    if (chosenOption === null && options.length) {
-      setChosenOption(options[0]);
-    }
-  }, [options]);
+  //
+  // useEffect(() => {
+  //   if (chosenOption === null && options.length) {
+  //     setChosenOption(options[0]);
+  //   }
+  // }, [chosenOption, options]);
 
   return (
-    <Menu
-      visible={isVisible}
-      onDismiss={handleCloseMenu}
-      anchor={
-        <Button
-          onPress={handleOpenMenu}
-          mode="outlined"
-          icon="menu-down"
-          contentStyle={styles.trigger}>
-          {chosenOption?.label || placeholder}
-        </Button>
-      }>
-      {options.map(({label, value}) => (
-        <Menu.Item
-          key={value}
-          title={label}
-          onPress={() => handleChooseItem({label, value})}
-        />
-      ))}
-    </Menu>
+    <>
+      {label && (
+        <Text
+          accessibilityLabel={label}
+          variant="labelMedium"
+          style={styles.label}>
+          {label}
+        </Text>
+      )}
+      <Menu
+        visible={isVisible}
+        onDismiss={handleCloseMenu}
+        anchor={
+          <Button
+            accessibilityLabel={chosenOption?.label}
+            onPress={handleOpenMenu}
+            mode="outlined"
+            icon="menu-down"
+            contentStyle={styles.trigger}>
+            {chosenOption?.label || placeholder}
+          </Button>
+        }>
+        {options.map(({label, value}) => (
+          <Menu.Item
+            key={value}
+            title={label}
+            onPress={() => handleChooseItem({label, value})}
+          />
+        ))}
+      </Menu>
+    </>
   );
 };
 
@@ -59,4 +78,5 @@ const styles = StyleSheet.create({
   trigger: {
     flexDirection: 'row-reverse',
   },
+  label: {marginBottom: 4},
 });

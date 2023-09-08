@@ -58,7 +58,7 @@ export const ScreenRollupWrapper = ({
   if (isLoading) {
     return (
       <View style={styles.container}>
-        <ActivityIndicator size={50} />
+        <ActivityIndicator accessibilityLabel="Loading indicator" size={50} />
       </View>
     );
   }

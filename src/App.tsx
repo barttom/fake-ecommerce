@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  LogBox,
   SafeAreaView,
   StatusBar,
   StyleSheet,
@@ -9,8 +10,11 @@ import {PaperProvider, MD3LightTheme, MD3DarkTheme} from 'react-native-paper';
 import {NavigationContainer} from '@react-navigation/native';
 import {Provider} from 'react-redux';
 import {RootNavigator} from './common/components/Navigator';
-import {store} from './common/redux';
+import {initialStore} from './common/redux';
 import {colorsDark, colorsLight} from './common/theme/colors';
+
+// For presentation purposes, to avoid logs to be on the screen when running E2E tests
+LogBox.ignoreAllLogs(true);
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -20,7 +24,7 @@ function App() {
     : {...MD3LightTheme, colors: colorsLight};
 
   return (
-    <Provider store={store}>
+    <Provider store={initialStore}>
       <PaperProvider theme={theme}>
         <SafeAreaView style={styles.container}>
           <StatusBar

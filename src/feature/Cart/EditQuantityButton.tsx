@@ -8,22 +8,16 @@ import {addOrEditCartItem, CartItem, removeItemFromCart} from './cartSlice';
 export type EditQuantityButtonProps = {cartItem: CartItem};
 
 export const EditQuantityButton = ({cartItem}: EditQuantityButtonProps) => {
-  const {quantity, stock, id} = cartItem;
+  const {quantity, stock, id, title} = cartItem;
   const dispatch = useAppDispatch();
 
   const handleDecrease = () => {
-    const newValue = quantity - 1;
-
-    if (newValue === 0) {
-      handleRemove();
-    } else {
-      dispatch(
-        addOrEditCartItem({
-          ...cartItem,
-          quantity: quantity - 1,
-        }),
-      );
-    }
+    dispatch(
+      addOrEditCartItem({
+        ...cartItem,
+        quantity: quantity - 1,
+      }),
+    );
   };
   const handleIncrease = () => {
     dispatch(
@@ -50,6 +44,7 @@ export const EditQuantityButton = ({cartItem}: EditQuantityButtonProps) => {
         icon="trash-can-outline"
         mode="contained"
         onPress={handleRemove}
+        accessibilityLabel={`Remove ${title} from the cart`}
       />
     </View>
   );
