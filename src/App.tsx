@@ -37,6 +37,7 @@ function App() {
           style={[styles.container, {backgroundColor: colors.background}]}>
           <StatusBar
             barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+            backgroundColor={colors.background}
             translucent
           />
 
