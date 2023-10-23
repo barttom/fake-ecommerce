@@ -6,9 +6,11 @@ import {
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import {rootApi} from '../api';
 import {cartReducer} from '../../feature/Cart/';
+import {settingsReducer} from '../../feature/Settings/';
 
 const rootReducer = combineReducers({
   cartReducer,
+  settingsReducer,
   [rootApi.reducerPath]: rootApi.reducer,
 });
 
