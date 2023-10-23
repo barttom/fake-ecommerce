@@ -75,7 +75,7 @@ export const ScreenRollupWrapper = ({
             inputRange: [0, 100],
             outputRange: ['0%', '100%'],
           }),
-          backgroundColor: animationColor || colors.surface,
+          backgroundColor: animationColor || colors.backdrop,
         }}>
         <Animated.View
           style={[
