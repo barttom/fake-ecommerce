@@ -8,9 +8,14 @@ import {setTheme, SettingsState} from './settingsSlice';
 export const ThemeSettings = () => {
   const deviceTheme = useAppSelector(selectTheme);
   const dispatch = useAppDispatch();
-  const handleChangeDeviceTheme = useCallback((value: string) => {
-    dispatch(setTheme(value as SettingsState['deviceTheme']));
-  }, []);
+  const handleChangeDeviceTheme = useCallback(
+    (value: string) => {
+      if (value) {
+        dispatch(setTheme(value as SettingsState['deviceTheme']));
+      }
+    },
+    [dispatch],
+  );
 
   return (
     <View style={styles.wrapper}>
