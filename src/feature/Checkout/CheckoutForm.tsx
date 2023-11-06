@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import {Button, HelperText, TextInput} from 'react-native-paper';
+import {Button} from 'react-native-paper';
 import {Dropdown} from '../../common/components/Dropdown';
+import {TextField} from '../../common/components/TextField';
 
 export type CheckoutFormProps = {onSubmit: () => void};
 type ErrorState = {
@@ -52,28 +53,20 @@ export const CheckoutForm = ({onSubmit}: CheckoutFormProps) => {
   return (
     <>
       <ScrollView style={styles.form}>
-        <TextInput
-          accessibilityLabel="Name input field"
+        <TextField
           onChangeText={setName}
           value={name}
           label="Name"
-          error={!!errors.name}
+          error={errors.name}
         />
-        <HelperText type="error" visible={!!errors.name}>
-          {errors.name}
-        </HelperText>
-        <TextInput
-          accessibilityLabel="Address input field"
+        <TextField
           onChangeText={setAddress}
           numberOfLines={3}
           multiline
           value={address}
           label="Address"
-          error={!!errors.address}
+          error={errors.address}
         />
-        <HelperText type="error" visible={!!errors.address}>
-          {errors.address}
-        </HelperText>
         <Dropdown
           label="Delivery type"
           options={deliveryOptions}
