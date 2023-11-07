@@ -65,7 +65,7 @@ export const Dropdown = ({
         {options.map(({label: optionLabel, value}) => (
           <Menu.Item
             key={value}
-            title={label}
+            title={optionLabel}
             onPress={() => handleChooseItem({label: optionLabel, value})}
           />
         ))}
