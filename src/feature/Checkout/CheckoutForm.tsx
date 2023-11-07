@@ -1,14 +1,42 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {Button} from 'react-native-paper';
-import {Dropdown} from '../../common/components/Dropdown';
-import {TextField} from '../../common/components/TextField';
+import {FormProvider, useForm} from 'react-hook-form';
+import * as yup from 'yup';
+import {yupResolver} from '@hookform/resolvers/yup';
+import {DropdownRHF} from '../../common/components/Dropdown';
+import {TextFieldRHF} from '../../common/components/TextField/';
 
 export type CheckoutFormProps = {onSubmit: () => void};
-type ErrorState = {
-  name?: string;
-  address?: string;
+export type CheckoutFormFields = {
+  name: string;
+  address: string;
+  deliveryType: string;
 };
+
+const validationSchema = yup
+  .object({
+    name: yup
+      .string()
+      .required('Your name should have at least 2 and maximum 100 characters')
+      .min(2, 'Your name should have at least 2 and maximum 100 characters')
+      .max(100, 'Your name should have at least 2 and maximum 100 characters'),
+    address: yup
+      .string()
+      .required(
+        'Your address should have at least 20 and maximum 500 characters',
+      )
+      .min(
+        20,
+        'Your address should have at least 20 and maximum 500 characters',
+      )
+      .max(
+        500,
+        'Your address should have at least 20 and maximum 500 characters',
+      ),
+    deliveryType: yup.string().required(),
+  })
+  .required();
 
 const deliveryOptions = [
   {
@@ -17,65 +45,45 @@ const deliveryOptions = [
   },
   {label: 'Courier', value: 'courier'},
 ];
-const initialErrors = {
-  name: '',
-  address: '',
-};
-const nameValidator = (value: string) => value.length > 1 && value.length < 101;
-const addressValidator = (value: string) =>
-  value.length > 19 && value.length < 501;
 
 export const CheckoutForm = ({onSubmit}: CheckoutFormProps) => {
-  const [name, setName] = useState('');
-  const [address, setAddress] = useState('');
-  const [, setDeliveryType] = useState('');
-  const [errors, setErrors] = useState<ErrorState>({...initialErrors});
+  const formMethods = useForm<CheckoutFormFields>({
+    defaultValues: {
+      address: '',
+      deliveryType: deliveryOptions[0].value,
+      name: '',
+    },
+    resolver: yupResolver(validationSchema),
+  });
 
-  const handleSubmit = () => {
-    const tempErrors = {...initialErrors};
-    const isNameValid = nameValidator(name);
-    const isAddressValid = addressValidator(address);
-
-    tempErrors.name = isNameValid
-      ? ''
-      : 'Your name should have at least 2 and maximum 100 characters';
-    tempErrors.address = isAddressValid
-      ? ''
-      : 'Your address should have at least 20 and maximum 500 characters';
-
-    setErrors(tempErrors);
-
-    if (isAddressValid && isNameValid) {
-      onSubmit();
-    }
+  const submitValues = (values: CheckoutFormFields) => {
+    console.log(values);
+    onSubmit();
   };
 
   return (
     <>
-      <ScrollView style={styles.form}>
-        <TextField
-          onChangeText={setName}
-          value={name}
-          label="Name"
-          error={errors.name}
-        />
-        <TextField
-          onChangeText={setAddress}
-          numberOfLines={3}
-          multiline
-          value={address}
-          label="Address"
-          error={errors.address}
-        />
-        <Dropdown
-          label="Delivery type"
-          options={deliveryOptions}
-          onSelect={newValue => setDeliveryType(newValue as string)}
-          initialChosenOption={deliveryOptions[0]}
-        />
+      <ScrollView style={styles.form} bounces={false} scrollEnabled={false}>
+        <FormProvider {...formMethods}>
+          <TextFieldRHF name="name" label="Name" />
+          <TextFieldRHF
+            name="address"
+            numberOfLines={3}
+            multiline
+            label="Address"
+          />
+          <DropdownRHF
+            name="deliveryType"
+            label="Delivery type"
+            options={deliveryOptions}
+            initialChosenOption={deliveryOptions[0]}
+          />
+        </FormProvider>
       </ScrollView>
       <View style={styles.actions}>
-        <Button mode="contained" onPress={handleSubmit}>
+        <Button
+          mode="contained"
+          onPress={formMethods.handleSubmit(submitValues)}>
           Order
         </Button>
       </View>
@@ -84,7 +92,7 @@ export const CheckoutForm = ({onSubmit}: CheckoutFormProps) => {
 };
 
 const styles = StyleSheet.create({
-  form: {height: '80%'},
+  form: {height: '80%', paddingTop: 24, paddingVertical: 8},
   actions: {
     height: '20%',
     flexDirection: 'column-reverse',

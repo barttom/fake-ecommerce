@@ -11,6 +11,7 @@ export const TextField = ({error, ...props}: TextFieldProps) => {
       <TextInput
         accessibilityLabel={`${props.label} input field`}
         error={isError}
+        style={{minHeight: props.numberOfLines ? props.numberOfLines * 32 : 24}}
         {...props}
       />
       <HelperText type="error" visible={isError}>
