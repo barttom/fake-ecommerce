@@ -14,7 +14,7 @@ export const CheckoutScreen = () => {
   };
 
   return (
-    <ScreenRollupWrapper isLoading={false}>
+    <ScreenRollupWrapper isLoading={false} animationDuration={0}>
       {isOrdered ? (
         <CheckoutConfirmMessage />
       ) : (
