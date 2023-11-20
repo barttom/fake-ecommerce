@@ -1,5 +1,7 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {
+  AuthRequestParams,
+  AuthResponse,
   CategoriesResponse,
   Product,
   ProductsRequestParams,
@@ -26,6 +28,13 @@ export const rootApi = createApi({
     categories: build.query<CategoriesResponse, void>({
       query: () => 'products/categories',
     }),
+    authenticateUser: build.mutation<AuthResponse, AuthRequestParams>({
+      query: body => ({
+        url: 'auth/login',
+        method: 'POST',
+        body,
+      }),
+    }),
   }),
 });
 
@@ -34,4 +43,5 @@ export const {
   useCategoriesQuery,
   useLazyAllProductsQuery,
   useSingleProductQuery,
+  useAuthenticateUserMutation,
 } = rootApi;

@@ -18,22 +18,20 @@ export type AuthFormProps = {
   onSubmit: (values: AuthFormValues) => void;
 };
 type AuthFormValues = {
-  email: string;
+  username: string;
   password: string;
 };
 const validationSchema = yup.object({
-  email: yup.string().email().required(),
-  password: yup
-    .string()
-    .required()
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      'Password must contain:' +
-        '\n- at least eight characters,' +
-        '\n- at least one number' +
-        '\n- both lower and uppercase letters' +
-        '\n- at least special characters',
-    ),
+  username: yup.string().required(),
+  password: yup.string().required(),
+  // .matches(
+  //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+  //   'Password must contain:' +
+  //     '\n- at least eight characters,' +
+  //     '\n- at least one number' +
+  //     '\n- both lower and uppercase letters' +
+  //     '\n- at least special characters',
+  // ),
 });
 
 export const AuthForm = ({onSubmit}: AuthFormProps) => {
@@ -42,7 +40,7 @@ export const AuthForm = ({onSubmit}: AuthFormProps) => {
   const {colors} = useTheme();
   const formMethods = useForm<AuthFormValues>({
     defaultValues: {
-      email: '',
+      username: '',
       password: '',
     },
     resolver: yupResolver(validationSchema),
@@ -60,7 +58,7 @@ export const AuthForm = ({onSubmit}: AuthFormProps) => {
       </Text>
       <Divider />
       <FormProvider {...formMethods}>
-        <TextFieldRHF name="email" label="e-mail" />
+        <TextFieldRHF name="username" label="Username" />
         <TextFieldRHF
           name="password"
           label="Password"
@@ -83,9 +81,10 @@ export const AuthForm = ({onSubmit}: AuthFormProps) => {
 const styles = StyleSheet.create({
   wrapper: {
     padding: 16,
+    marginVertical: 16,
   },
   title: {
-    marginBottom: 16,
+    marginBottom: 8,
     paddingBottom: 8,
     borderBottomWidth: 1,
   },
