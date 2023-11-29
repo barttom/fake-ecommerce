@@ -37,21 +37,23 @@ export const ProductsScreen = () => {
   const isLoading = isCategoriesLoading || isProductsLoading;
   const content = useMemo(
     () => (
-      <FlatList
-        data={productsData?.products}
-        keyExtractor={({id}) => id.toString()}
-        renderItem={({item: {title, thumbnail, price, id, stock}}) => (
-          <ProductItem
-            id={id}
-            title={title}
-            thumbnail={thumbnail}
-            price={price}
-            stock={stock}
-          />
-        )}
-      />
+      <ScreenRollupWrapper isLoading={isLoading}>
+        <FlatList
+          data={productsData?.products}
+          keyExtractor={({id}) => id.toString()}
+          renderItem={({item: {title, thumbnail, price, id, stock}}) => (
+            <ProductItem
+              id={id}
+              title={title}
+              thumbnail={thumbnail}
+              price={price}
+              stock={stock}
+            />
+          )}
+        />
+      </ScreenRollupWrapper>
     ),
-    [productsData],
+    [productsData, isLoading],
   );
 
   useEffect(() => {
@@ -77,11 +79,7 @@ export const ProductsScreen = () => {
           />
         </View>
       )}
-      {productsData && (
-        <ScreenRollupWrapper isLoading={isLoading}>
-          {content}
-        </ScreenRollupWrapper>
-      )}
+      {content}
       {productsData && (
         <DataTable.Pagination
           page={filters.skip / QUERY_LIMIT}
