@@ -35,7 +35,7 @@ export const ScreenRollupWrapper = ({
 
 const ScreenRollupWrapperContent = ({
   children,
-  animationDuration = 800,
+  animationDuration = 600,
   initialSize = 10,
   backgroundColor,
   animationColor,

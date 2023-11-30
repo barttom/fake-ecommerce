@@ -7,8 +7,10 @@ import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import {rootApi} from '../api';
 import {cartReducer} from '../../feature/Cart/';
 import {settingsReducer} from '../../feature/Settings/';
+import {authReducer} from '../../feature/Auth';
 
 const rootReducer = combineReducers({
+  authReducer,
   cartReducer,
   settingsReducer,
   [rootApi.reducerPath]: rootApi.reducer,
