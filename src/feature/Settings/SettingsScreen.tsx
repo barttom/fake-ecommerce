@@ -5,21 +5,24 @@ import {ScreenRollupWrapper} from '../../common/components/ScreenRollupWrapper';
 import {AuthForm} from '../Auth/AuthForm';
 import {useAuthenticateUserMutation} from '../../common/api';
 import {useAppSelector} from '../../common/redux';
-import {selectIsAuthenticated} from '../Auth/authSelector';
-import {ThemeSettings} from './ThemeSettings';
+import {selectIsAuthenticated, selectUser} from '../Auth/authSelector';
+import {UserBanner} from '../Auth/UserBanner';
+import {UserMenu} from '../Auth/UserMenu';
 
 export const SettingsScreen = () => {
   const [sendAuthCredentials] = useAuthenticateUserMutation();
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
+  const user = useAppSelector(selectUser);
 
   return (
     <ScreenRollupWrapper>
       <Text variant="headlineLarge">Settings</Text>
-      {!isAuthenticated && (
+      {!isAuthenticated ? (
         <AuthForm onSubmit={values => sendAuthCredentials(values)} />
+      ) : (
+        <UserBanner data={user} />
       )}
-
-      <ThemeSettings />
+      <UserMenu isAuthenticated={isAuthenticated} />
     </ScreenRollupWrapper>
   );
 };

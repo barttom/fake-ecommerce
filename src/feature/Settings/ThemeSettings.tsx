@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {ToggleButton, Text} from 'react-native-paper';
+import {ToggleButton} from 'react-native-paper';
 import {useAppDispatch, useAppSelector} from '../../common/redux';
 import {selectTheme} from './settingsSelectors';
 import {setTheme, SettingsState} from './settingsSlice';
@@ -19,7 +19,6 @@ export const ThemeSettings = () => {
 
   return (
     <View style={styles.wrapper}>
-      <Text style={styles.label}>Theme: </Text>
       <ToggleButton.Row
         onValueChange={handleChangeDeviceTheme}
         value={deviceTheme}>
@@ -35,9 +34,5 @@ const styles = StyleSheet.create({
   wrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 24,
-  },
-  label: {
-    marginRight: 16,
   },
 });

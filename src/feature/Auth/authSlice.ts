@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 import {rootApi} from '../../common/api';
 import {User} from '../../common/api/apiTypes';
 
@@ -15,8 +15,9 @@ const authSlice = createSlice({
   name: 'auth',
   initialState: initialAuthState,
   reducers: {
-    setAuth: (state, {payload}: PayloadAction<boolean>) => {
-      state.isAuthenticated = payload;
+    logOut: state => {
+      state.isAuthenticated = false;
+      state.user = undefined;
     },
   },
   extraReducers: builder => {
@@ -38,6 +39,6 @@ const authSlice = createSlice({
 });
 
 export const {
-  actions: {setAuth},
+  actions: {logOut},
   reducer: authReducer,
 } = authSlice;
