@@ -18,7 +18,6 @@ export const UserMenu = ({isAuthenticated}: UserMenuProps) => {
         title="Theme"
         left={props => <List.Icon {...props} icon="palette" />}
         right={() => <ThemeSettings />}
-        onPress={handleLogout}
       />
       {isAuthenticated && (
         <>
@@ -26,6 +25,7 @@ export const UserMenu = ({isAuthenticated}: UserMenuProps) => {
           <List.Item
             title="Log out"
             left={props => <List.Icon {...props} icon="logout" />}
+            onPress={handleLogout}
           />
         </>
       )}
