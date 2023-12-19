@@ -29,3 +29,21 @@ export type SingleProductResponse = Product;
 
 export type Category = string;
 export type CategoriesResponse = Category[];
+
+export type AuthRequestParams = {
+  username: string;
+  password: string;
+};
+
+export type AuthResponse = User;
+
+export type User = {
+  id: number;
+  username: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  gender: 'male' | 'female';
+  image: string;
+  token: string;
+};
