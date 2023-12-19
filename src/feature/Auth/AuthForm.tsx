@@ -17,21 +17,13 @@ import {TextFieldRHF} from '../../common/components/TextField';
 export type AuthFormProps = {
   onSubmit: (values: AuthFormValues) => void;
 };
-type AuthFormValues = {
+export type AuthFormValues = {
   username: string;
   password: string;
 };
 const validationSchema = yup.object({
   username: yup.string().required(),
   password: yup.string().required(),
-  // .matches(
-  //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-  //   'Password must contain:' +
-  //     '\n- at least eight characters,' +
-  //     '\n- at least one number' +
-  //     '\n- both lower and uppercase letters' +
-  //     '\n- at least special characters',
-  // ),
 });
 
 export const AuthForm = ({onSubmit}: AuthFormProps) => {
