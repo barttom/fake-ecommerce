@@ -10,9 +10,9 @@ import {settingsReducer} from '../../feature/Settings/';
 import {authReducer} from '../../feature/Auth';
 
 const rootReducer = combineReducers({
-  authReducer,
-  cartReducer,
-  settingsReducer,
+  auth: authReducer,
+  cart: cartReducer,
+  settings: settingsReducer,
   [rootApi.reducerPath]: rootApi.reducer,
 });
 
