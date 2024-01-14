@@ -34,7 +34,7 @@ describe('<CheckoutScreen />', () => {
   it('Renders properly', () => {
     renderWithProviders(<Wrapper />, {
       preloadedState: {
-        cartReducer: {
+        cart: {
           items: mockedItems,
         },
       },
@@ -46,7 +46,7 @@ describe('<CheckoutScreen />', () => {
   it('User should see validation messages after sending empty form', async () => {
     renderWithProviders(<Wrapper />, {
       preloadedState: {
-        cartReducer: {
+        cart: {
           items: mockedItems,
         },
       },
@@ -71,7 +71,7 @@ describe('<CheckoutScreen />', () => {
   it('User is able to finish checkout process', async () => {
     renderWithProviders(<Wrapper />, {
       preloadedState: {
-        cartReducer: {
+        cart: {
           items: mockedItems,
         },
       },

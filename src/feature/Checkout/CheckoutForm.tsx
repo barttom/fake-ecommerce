@@ -7,7 +7,9 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {DropdownRHF} from '../../common/components/Dropdown';
 import {TextFieldRHF} from '../../common/components/TextField/';
 
-export type CheckoutFormProps = {onSubmit: () => void};
+export type CheckoutFormProps = {
+  onSubmit: (values: CheckoutFormFields) => void;
+};
 export type CheckoutFormFields = {
   name: string;
   address: string;
@@ -57,8 +59,7 @@ export const CheckoutForm = ({onSubmit}: CheckoutFormProps) => {
   });
 
   const submitValues = (values: CheckoutFormFields) => {
-    console.log(values);
-    onSubmit();
+    onSubmit(values);
   };
 
   return (
