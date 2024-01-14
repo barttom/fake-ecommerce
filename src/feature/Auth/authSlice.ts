@@ -1,6 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {rootApi} from '../../common/api';
 import {User} from '../../common/api/apiTypes';
+import {deleteCacheItem, getCacheItem, setCacheItem} from '../../common/cache';
 
 export type AuthState = {
   isAuthenticated: boolean;
@@ -10,14 +11,21 @@ export type AuthState = {
 const initialAuthState: AuthState = {
   isAuthenticated: false,
 };
+const cachedUser = getCacheItem('user');
 
 const authSlice = createSlice({
   name: 'auth',
-  initialState: initialAuthState,
+  initialState: cachedUser
+    ? {
+        isAuthenticated: true,
+        user: cachedUser,
+      }
+    : initialAuthState,
   reducers: {
     logOut: state => {
       state.isAuthenticated = false;
       state.user = undefined;
+      deleteCacheItem('user');
     },
   },
   extraReducers: builder => {
@@ -26,6 +34,7 @@ const authSlice = createSlice({
       (state, {payload}) => {
         state.isAuthenticated = !!payload;
         state.user = {...payload};
+        setCacheItem('user', payload);
       },
     );
     builder.addMatcher(
@@ -33,6 +42,7 @@ const authSlice = createSlice({
       state => {
         state.isAuthenticated = false;
         state.user = undefined;
+        deleteCacheItem('user');
       },
     );
   },

@@ -9,7 +9,7 @@ export const ThemeSettings = () => {
   const deviceTheme = useAppSelector(selectTheme);
   const dispatch = useAppDispatch();
   const handleChangeDeviceTheme = useCallback(
-    (value: string) => {
+    async (value: string) => {
       if (value) {
         dispatch(setTheme(value as SettingsState['deviceTheme']));
       }

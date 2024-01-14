@@ -36,7 +36,7 @@ const Wrapper = () => (
 describe('<CartScreen />', () => {
   it('Renders properly', async () => {
     renderWithProviders(<Wrapper />, {
-      preloadedState: {cartReducer: {items: mockedItems}},
+      preloadedState: {cart: {items: mockedItems}},
     });
 
     expect(screen.getAllByLabelText('Cart item:', {exact: false})).toHaveLength(
@@ -46,7 +46,7 @@ describe('<CartScreen />', () => {
 
   it('Renders empty state', () => {
     renderWithProviders(<Wrapper />, {
-      preloadedState: {cartReducer: {items: []}},
+      preloadedState: {cart: {items: []}},
     });
 
     expect(screen.getByText('Your cart is empty')).toBeOnTheScreen();
@@ -54,7 +54,7 @@ describe('<CartScreen />', () => {
 
   it('User is able to remove item from the cart', async () => {
     renderWithProviders(<Wrapper />, {
-      preloadedState: {cartReducer: {items: mockedItems}},
+      preloadedState: {cart: {items: mockedItems}},
     });
 
     await act(async () => {
@@ -70,7 +70,7 @@ describe('<CartScreen />', () => {
 
   it('User is able to decrease quantity of product', async () => {
     renderWithProviders(<Wrapper />, {
-      preloadedState: {cartReducer: {items: mockedItems}},
+      preloadedState: {cart: {items: mockedItems}},
     });
 
     const valueElement = screen.getAllByLabelText('Quantity value')[0];
@@ -96,7 +96,7 @@ describe('<CartScreen />', () => {
 
   it('User is able to increase quantity of product', async () => {
     renderWithProviders(<Wrapper />, {
-      preloadedState: {cartReducer: {items: mockedItems}},
+      preloadedState: {cart: {items: mockedItems}},
     });
 
     const valueElement = screen.getAllByLabelText('Quantity value')[0];
@@ -125,7 +125,7 @@ describe('<CartScreen />', () => {
 
   it('User is able to got to the checkout process', async () => {
     renderWithProviders(<Wrapper />, {
-      preloadedState: {cartReducer: {items: mockedItems}},
+      preloadedState: {cart: {items: mockedItems}},
     });
 
     await act(async () => {

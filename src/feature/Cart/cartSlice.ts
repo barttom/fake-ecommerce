@@ -1,5 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {Product} from '../../common/api/apiTypes';
+import {getCacheItem, setCacheItem} from '../../common/cache';
 
 export type CartItem = Pick<
   Product,
@@ -7,19 +8,23 @@ export type CartItem = Pick<
 > & {
   quantity: number;
 };
-export type CartSlice = {
+export type CartState = {
   items: Array<CartItem>;
 };
 
-const initialCartState: CartSlice = {
+const initialCartState: CartState = {
   items: [],
 };
+const cachedCart = getCacheItem('cart');
 
 const authSlice = createSlice({
   name: 'cart',
-  initialState: initialCartState,
+  initialState: cachedCart || initialCartState,
   reducers: {
-    addOrEditCartItem: (state, {payload}: PayloadAction<CartItem>) => {
+    addOrEditCartItem: (
+      state: CartState,
+      {payload}: PayloadAction<CartItem>,
+    ) => {
       const existedItemIndex = state.items.findIndex(
         ({id}) => id === payload.id,
       );
@@ -29,12 +34,19 @@ const authSlice = createSlice({
       } else {
         state.items = [...state.items, payload];
       }
+
+      setCacheItem('cart', state);
     },
-    removeItemFromCart: (state, {payload}: PayloadAction<CartItem['id']>) => {
+    removeItemFromCart: (
+      state: CartState,
+      {payload}: PayloadAction<CartItem['id']>,
+    ) => {
       state.items = state.items.filter(item => item.id !== payload);
+      setCacheItem('cart', state);
     },
     clearCart: state => {
       state.items = [];
+      setCacheItem('cart', state);
     },
   },
 });
