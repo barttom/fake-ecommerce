@@ -11,7 +11,9 @@ export const SingleProductScreen = () => {
   const {data, isLoading} = useSingleProductQuery(params.productId);
 
   useEffect(() => {
-    setOptions({headerTitle: data?.title || ''});
+    setOptions({
+      headerTitle: data?.title || '',
+    });
 
     return () => setOptions({headerTitle: ''});
   }, [data, setOptions]);

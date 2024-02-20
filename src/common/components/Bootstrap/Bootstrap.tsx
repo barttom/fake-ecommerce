@@ -7,6 +7,7 @@ import {RootNavigator} from '../Navigator';
 import {colorsDark, colorsLight} from '../../theme/colors';
 import {useAppSelector} from '../../redux';
 import {selectTheme} from '../../../feature/Settings/settingsSelectors';
+import {useInternetConnection} from '../../utils/useInternetConnection';
 
 export const Bootstrap = () => {
   const deviceTheme = useAppSelector(selectTheme);
@@ -17,6 +18,7 @@ export const Bootstrap = () => {
   const theme = isDarkMode
     ? {...MD3DarkTheme, colors}
     : {...MD3LightTheme, colors};
+  const {snackbar, banner} = useInternetConnection();
 
   const navigationTheme = {
     dark: isDarkMode,
@@ -39,9 +41,10 @@ export const Bootstrap = () => {
           backgroundColor={colors.background}
           translucent
         />
-
+        {banner}
         <NavigationContainer theme={navigationTheme}>
           <RootNavigator />
+          {snackbar}
         </NavigationContainer>
       </SafeAreaView>
     </PaperProvider>
