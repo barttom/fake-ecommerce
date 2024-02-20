@@ -4,6 +4,7 @@ import {
   PreloadedState,
 } from '@reduxjs/toolkit';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
+import {setupListeners} from '@reduxjs/toolkit/query';
 import {rootApi} from '../api';
 import {cartReducer} from '../../feature/Cart/';
 import {settingsReducer} from '../../feature/Settings/';
@@ -34,3 +35,5 @@ export type AppState = ReturnType<typeof initialStore.getState>;
 export type AppStore = ReturnType<typeof setupStore>;
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<AppState> = useSelector;
+
+setupListeners(initialStore.dispatch);

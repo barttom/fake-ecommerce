@@ -2,9 +2,11 @@ import React, {ReactNode, useRef} from 'react';
 import {Animated, StyleSheet, View} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import {ActivityIndicator, useTheme} from 'react-native-paper';
+import {useInternetConnection} from '../../utils/useInternetConnection';
 
 export type ScreenRollupWrapperProps = ScreenRollupWrapperContentProps & {
   isLoading?: boolean;
+  withoutAnimation?: boolean;
 };
 type ScreenRollupWrapperContentProps = {
   children: ReactNode;
@@ -17,9 +19,15 @@ const FADE_IN_DURATION = 200;
 
 export const ScreenRollupWrapper = ({
   isLoading = false,
+  withoutAnimation = false,
   children,
   ...props
 }: ScreenRollupWrapperProps) => {
+  const {isInternetReachable} = useInternetConnection();
+  if (withoutAnimation || !isInternetReachable) {
+    return <View style={styles.content}>{children}</View>;
+  }
+
   return (
     <View style={styles.container}>
       {isLoading ? (

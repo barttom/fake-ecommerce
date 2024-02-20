@@ -7,6 +7,7 @@ import {Dropdown, DropdownOption} from '../../common/components/Dropdown';
 import {mapStringArrayToOptions} from '../../common/utils/helpers';
 import {ProductsRequestParams} from '../../common/api/apiTypes';
 import {NoDataPlaceholder} from '../../common/components/NoDataPlaceholder';
+import {useInternetConnection} from '../../common/utils/useInternetConnection';
 import {ProductItem} from './ProductItem';
 
 const QUERY_LIMIT = 15;
@@ -16,6 +17,7 @@ export const ProductsScreen = () => {
     category: '',
     skip: 0,
   });
+  const {isInternetReachable} = useInternetConnection();
 
   const [fetchProducts, {data: productsData, isLoading: isProductsLoading}] =
     useLazyAllProductsQuery();
@@ -61,7 +63,7 @@ export const ProductsScreen = () => {
       ...filters,
       limit: QUERY_LIMIT,
     });
-  }, [filters, fetchProducts]);
+  }, [filters, fetchProducts, isInternetReachable]);
 
   if ((!isLoading && !productsData) || productsData?.products.length === 0) {
     return <NoDataPlaceholder message="No products with chosen criteria" />;

@@ -14,6 +14,8 @@ export const ROOT_API_URL = 'https://dummyjson.com/';
 export const rootApi = createApi({
   reducerPath: 'rootApi',
   baseQuery: fetchBaseQuery({baseUrl: ROOT_API_URL}),
+  refetchOnReconnect: true,
+  refetchOnFocus: true,
   endpoints: build => ({
     allProducts: build.query<ProductsResponse, ProductsRequestParams>({
       query: ({category, skip, limit}) => {

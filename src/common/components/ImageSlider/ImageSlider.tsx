@@ -5,7 +5,7 @@ export type ImageSliderProps = {
   images: Array<string>;
 };
 const {width, height: screenHeight} = Dimensions.get('screen');
-const height = screenHeight / 2;
+const height = screenHeight / 3;
 
 export const ImageSlider = ({images}: ImageSliderProps) => {
   return (
