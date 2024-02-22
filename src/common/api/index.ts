@@ -1,5 +1,7 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
+import {AppState} from '../redux';
 import {
+  AuthenticatedUserResponse,
   AuthRequestParams,
   AuthResponse,
   CategoriesResponse,
@@ -13,7 +15,18 @@ export const ROOT_API_URL = 'https://dummyjson.com/';
 
 export const rootApi = createApi({
   reducerPath: 'rootApi',
-  baseQuery: fetchBaseQuery({baseUrl: ROOT_API_URL}),
+  baseQuery: fetchBaseQuery({
+    baseUrl: ROOT_API_URL,
+    prepareHeaders: (headers, {getState}) => {
+      const token = (getState() as AppState).auth.user?.token;
+
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
+      }
+
+      return headers;
+    },
+  }),
   refetchOnReconnect: true,
   refetchOnFocus: true,
   endpoints: build => ({
@@ -37,6 +50,9 @@ export const rootApi = createApi({
         body,
       }),
     }),
+    authenticatedUser: build.query<AuthenticatedUserResponse, void>({
+      query: () => 'auth/me',
+    }),
   }),
 });
 
@@ -46,4 +62,6 @@ export const {
   useLazyAllProductsQuery,
   useSingleProductQuery,
   useAuthenticateUserMutation,
+  useAuthenticatedUserQuery,
+  useLazyAuthenticatedUserQuery,
 } = rootApi;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import {Button} from 'react-native-paper';
 import {FormProvider, useForm} from 'react-hook-form';
@@ -10,6 +10,7 @@ import {TextFieldRHF} from '../../common/components/TextField/';
 
 export type CheckoutFormProps = {
   onSubmit: (values: CheckoutFormFields) => void;
+  defaultValues: CheckoutFormFields;
 };
 export type CheckoutFormFields = {
   name: string;
@@ -67,7 +68,7 @@ const validationSchema = yup
   })
   .required();
 
-const deliveryOptions = [
+export const deliveryOptions = [
   {
     label: 'Post',
     value: 'post',
@@ -75,20 +76,15 @@ const deliveryOptions = [
   {label: 'Courier', value: 'courier'},
 ];
 
-export const CheckoutForm = ({onSubmit}: CheckoutFormProps) => {
+export const CheckoutForm = ({onSubmit, defaultValues}: CheckoutFormProps) => {
   const formMethods = useForm<CheckoutFormFields>({
-    defaultValues: {
-      street: '',
-      deliveryType: deliveryOptions[0].value,
-      name: '',
-      surname: '',
-      city: '',
-      phone: '',
-      postcode: '',
-    },
+    defaultValues,
     resolver: yupResolver(validationSchema),
   });
 
+  useEffect(() => {
+    formMethods.reset(defaultValues);
+  }, [defaultValues]);
   const submitValues = (values: CheckoutFormFields) => {
     onSubmit(values);
   };

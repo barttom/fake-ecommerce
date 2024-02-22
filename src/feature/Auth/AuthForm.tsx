@@ -14,7 +14,10 @@ import {StyleSheet} from 'react-native';
 import {yupResolver} from '@hookform/resolvers/yup';
 
 import {TextFieldRHF} from '../../common/components/TextField';
-import {useAuthenticateUserMutation} from '../../common/api';
+import {
+  useAuthenticateUserMutation,
+  useLazyAuthenticatedUserQuery,
+} from '../../common/api';
 
 export type AuthFormValues = {
   username: string;
@@ -29,7 +32,11 @@ export const AuthForm = () => {
   const [isPasswordHide, setIsPasswordHide] = useState(true);
   const [displayError, setDisplayError] = useState(false);
   const [sendAuthCredentials, {error, isError}] = useAuthenticateUserMutation();
-  const onSubmit = (values: AuthFormValues) => sendAuthCredentials(values);
+  const [fetchAuthenticatedUser] = useLazyAuthenticatedUserQuery();
+  const onSubmit = async (values: AuthFormValues) => {
+    await sendAuthCredentials(values);
+    fetchAuthenticatedUser();
+  };
 
   const {colors} = useTheme();
   const formMethods = useForm<AuthFormValues>({

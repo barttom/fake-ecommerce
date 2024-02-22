@@ -7,3 +7,5 @@ export const selectIsAuthenticated = (
 
 export const selectUser = (state: AppState): AuthState['user'] =>
   state.auth.user;
+
+export const selectMe = (state: AppState): AuthState['me'] => state.auth.me;
