@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FormProvider, useForm} from 'react-hook-form';
 import * as yup from 'yup';
 import {
@@ -8,15 +8,14 @@ import {
   Text,
   useTheme,
   TextInput,
+  Snackbar,
 } from 'react-native-paper';
 import {StyleSheet} from 'react-native';
 import {yupResolver} from '@hookform/resolvers/yup';
 
 import {TextFieldRHF} from '../../common/components/TextField';
+import {useAuthenticateUserMutation} from '../../common/api';
 
-export type AuthFormProps = {
-  onSubmit: (values: AuthFormValues) => void;
-};
 export type AuthFormValues = {
   username: string;
   password: string;
@@ -26,8 +25,11 @@ const validationSchema = yup.object({
   password: yup.string().required(),
 });
 
-export const AuthForm = ({onSubmit}: AuthFormProps) => {
+export const AuthForm = () => {
   const [isPasswordHide, setIsPasswordHide] = useState(true);
+  const [displayError, setDisplayError] = useState(false);
+  const [sendAuthCredentials, {error, isError}] = useAuthenticateUserMutation();
+  const onSubmit = (values: AuthFormValues) => sendAuthCredentials(values);
 
   const {colors} = useTheme();
   const formMethods = useForm<AuthFormValues>({
@@ -37,9 +39,16 @@ export const AuthForm = ({onSubmit}: AuthFormProps) => {
     },
     resolver: yupResolver(validationSchema),
   });
+  const errorMessage = `Server error: ${
+    (error as {data: {message: string}})?.data?.message
+  }`;
   const signIn = (values: AuthFormValues) => {
     onSubmit(values);
   };
+
+  useEffect(() => {
+    setDisplayError(isError);
+  }, [isError]);
 
   return (
     <Surface elevation={4} style={styles.wrapper}>
@@ -66,6 +75,12 @@ export const AuthForm = ({onSubmit}: AuthFormProps) => {
           Log in
         </Button>
       </FormProvider>
+      <Snackbar
+        visible={displayError}
+        onDismiss={() => setDisplayError(false)}
+        duration={3000}>
+        {errorMessage}
+      </Snackbar>
     </Surface>
   );
 };

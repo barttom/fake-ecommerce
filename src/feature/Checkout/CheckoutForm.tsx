@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {Button} from 'react-native-paper';
 import {FormProvider, useForm} from 'react-hook-form';
 import * as yup from 'yup';
@@ -94,45 +94,32 @@ export const CheckoutForm = ({onSubmit}: CheckoutFormProps) => {
   };
 
   return (
-    <View style={styles.wrapper}>
-      <ScrollView style={styles.form}>
-        <FormProvider {...formMethods}>
-          <TextFieldRHF name="name" label="First name" />
-          <TextFieldRHF name="surname" label="Last name" />
-          <TextFieldRHF name="email" label="Email" />
-          <TextFieldRHF
-            name="street"
-            numberOfLines={2}
-            multiline
-            label="Street"
-          />
-          <TextFieldRHF name="postcode" label="Postcode" />
-          <TextFieldRHF name="city" label="City" />
-          <TextFieldRHF name="phone" label="Phone number" />
-          <DropdownRHF
-            name="deliveryType"
-            label="Delivery type"
-            options={deliveryOptions}
-            initialChosenOption={deliveryOptions[0]}
-          />
-        </FormProvider>
-      </ScrollView>
-      <View style={styles.actions}>
-        <Button
-          mode="contained"
-          onPress={formMethods.handleSubmit(submitValues)}>
-          Order
-        </Button>
-      </View>
-    </View>
+    <FormProvider {...formMethods}>
+      <TextFieldRHF name="name" label="First name" />
+      <TextFieldRHF name="surname" label="Last name" />
+      <TextFieldRHF name="email" label="Email" />
+      <TextFieldRHF name="street" numberOfLines={2} multiline label="Street" />
+      <TextFieldRHF name="postcode" label="Postcode" />
+      <TextFieldRHF name="city" label="City" />
+      <TextFieldRHF name="phone" label="Phone number" />
+      <DropdownRHF
+        name="deliveryType"
+        label="Delivery type"
+        options={deliveryOptions}
+        initialChosenOption={deliveryOptions[0]}
+      />
+      <Button
+        mode="contained"
+        style={styles.submitButton}
+        onPress={formMethods.handleSubmit(submitValues)}>
+        Order
+      </Button>
+    </FormProvider>
   );
 };
 
 const styles = StyleSheet.create({
-  wrapper: {paddingTop: 24, paddingVertical: 8, flex: 1},
-  form: {flex: 1},
-  actions: {
-    height: 70,
-    flexDirection: 'column-reverse',
+  submitButton: {
+    marginVertical: 32,
   },
 });

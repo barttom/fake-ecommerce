@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {ScreenRollupWrapper} from '../../common/components/ScreenRollupWrapper';
 import {useAppDispatch} from '../../common/redux';
 import {clearCart} from '../Cart';
-import {CheckoutForm} from './CheckoutForm';
 import {CheckoutConfirmMessage} from './CheckoutConfirmMessage';
+import {CheckoutUserData} from './CheckoutUserData';
 
 export const CheckoutScreen = () => {
   const [isOrdered, setIsOrdered] = useState(false);
@@ -18,7 +18,7 @@ export const CheckoutScreen = () => {
       {isOrdered ? (
         <CheckoutConfirmMessage />
       ) : (
-        <CheckoutForm onSubmit={handleOnSubmit} />
+        <CheckoutUserData onUserDataSubmit={handleOnSubmit} />
       )}
     </ScreenRollupWrapper>
   );
