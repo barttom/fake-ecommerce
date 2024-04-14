@@ -56,16 +56,17 @@ describe('<CheckoutScreen />', () => {
       await rntlUser.press(screen.getByText('Order'));
     });
 
-    expect(
-      screen.getByText(
-        'Your name should have at least 2 and maximum 100 characters',
-      ),
-    ).toBeOnTheScreen();
-    expect(
-      screen.getByText(
-        'Your address should have at least 20 and maximum 500 characters',
-      ),
-    ).toBeOnTheScreen();
+    [
+      'Your name should have at least 2 and maximum 100 characters',
+      'Your last name should have at least 2 and maximum 100 characters',
+      'You need to add a valid email address',
+      'Your street should have at least 5 and maximum 100 characters',
+      'Postcode must be in format 00-000',
+      'Your city should have at least 3 and maximum 50 characters',
+      'Add valid phone number',
+    ].forEach(message => {
+      expect(screen.getByText(message)).toBeOnTheScreen();
+    });
   });
 
   it('User is able to finish checkout process', async () => {
@@ -79,16 +80,37 @@ describe('<CheckoutScreen />', () => {
 
     await act(async () => {
       await rntlUser.type(
-        screen.getByLabelText('Name input field'),
-        'Clark Kent',
+        screen.getByLabelText('First name input field'),
+        'Clark',
       );
       await rntlUser.type(
-        screen.getByLabelText('Address input field'),
-        'Apartment 3D 344 Clinton Street, Metropolis, USA',
+        screen.getByLabelText('Last name input field'),
+        'Kent',
+      );
+      await rntlUser.type(
+        screen.getByLabelText('Email input field'),
+        'clark.kent@nohero.com',
+      );
+      await rntlUser.type(
+        screen.getByLabelText('Street input field'),
+        'Kryptonite 1/10',
+      );
+      await rntlUser.type(
+        screen.getByLabelText('Postcode input field'),
+        '11-100',
+      );
+      await rntlUser.type(
+        screen.getByLabelText('City input field'),
+        'Metropolis',
+      );
+      await rntlUser.type(
+        screen.getByLabelText('Phone number input field'),
+        '605152123',
       );
       await rntlUser.press(screen.getByText('Post'));
       await rntlUser.press(screen.getByText('Courier'));
       await rntlUser.press(screen.getByText('Order'));
+      await rntlUser.press(screen.getByText('finish'));
     });
 
     expect(screen.getByText('Your order has been finished')).toBeOnTheScreen();
