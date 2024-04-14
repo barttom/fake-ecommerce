@@ -2,24 +2,35 @@ import React, {useState} from 'react';
 import {ScreenRollupWrapper} from '../../common/components/ScreenRollupWrapper';
 import {useAppDispatch} from '../../common/redux';
 import {clearCart} from '../Cart';
-import {CheckoutForm} from './CheckoutForm';
 import {CheckoutConfirmMessage} from './CheckoutConfirmMessage';
+import {CheckoutUserData} from './CheckoutUserData';
+import {CheckoutPayment} from './CheckoutPayment';
+type OrderStatus = 'deliveryData' | 'payment' | 'success';
 
 export const CheckoutScreen = () => {
-  const [isOrdered, setIsOrdered] = useState(false);
+  const [orderStatus, setOrderStatus] = useState<OrderStatus>('deliveryData');
   const dispatch = useAppDispatch();
-  const handleOnSubmit = () => {
+  const finishOrder = () => {
     dispatch(clearCart());
-    setIsOrdered(true);
+    setOrderStatus('success');
+  };
+  const goToPayment = () => {
+    setOrderStatus('payment');
   };
 
   return (
-    <ScreenRollupWrapper isLoading={false} animationDuration={0}>
-      {isOrdered ? (
-        <CheckoutConfirmMessage />
-      ) : (
-        <CheckoutForm onSubmit={handleOnSubmit} />
-      )}
+    <ScreenRollupWrapper withoutAnimation>
+      {(() => {
+        switch (orderStatus) {
+          case 'payment':
+            return <CheckoutPayment onFinish={finishOrder} />;
+          case 'success':
+            return <CheckoutConfirmMessage />;
+          case 'deliveryData':
+          default:
+            return <CheckoutUserData onUserDataSubmit={goToPayment} />;
+        }
+      })()}
     </ScreenRollupWrapper>
   );
 };

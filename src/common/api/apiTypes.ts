@@ -47,3 +47,18 @@ export type User = {
   image: string;
   token: string;
 };
+
+export type AuthenticatedUser = Omit<User, 'token'> & {
+  address: {
+    address: string;
+    city: string;
+    coordinates: {
+      lat: number;
+      lng: number;
+    };
+    postalCode: string;
+    state: string;
+  };
+  phone: string;
+};
+export type AuthenticatedUserResponse = AuthenticatedUser;

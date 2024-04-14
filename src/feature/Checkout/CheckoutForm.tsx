@@ -1,46 +1,74 @@
-import React from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import React, {useEffect} from 'react';
+import {StyleSheet} from 'react-native';
 import {Button} from 'react-native-paper';
 import {FormProvider, useForm} from 'react-hook-form';
 import * as yup from 'yup';
+import 'yup-phone-lite';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {DropdownRHF} from '../../common/components/Dropdown';
 import {TextFieldRHF} from '../../common/components/TextField/';
 
 export type CheckoutFormProps = {
   onSubmit: (values: CheckoutFormFields) => void;
+  defaultValues: CheckoutFormFields;
 };
 export type CheckoutFormFields = {
   name: string;
-  address: string;
+  surname: string;
+  email: string;
+  phone: string;
+  street: string;
+  postcode: string;
+  city: string;
   deliveryType: string;
+};
+const validationMessages = {
+  name: 'Your name should have at least 2 and maximum 100 characters',
+  surname: 'Your last name should have at least 2 and maximum 100 characters',
+  email: 'You need to add a valid email address',
+  city: 'Your city should have at least 3 and maximum 50 characters',
+  street: 'Your street should have at least 5 and maximum 100 characters',
+  postcode: 'Postcode must be in format 00-000',
+  phone: 'Add valid phone number',
 };
 
 const validationSchema = yup
   .object({
     name: yup
       .string()
-      .required('Your name should have at least 2 and maximum 100 characters')
-      .min(2, 'Your name should have at least 2 and maximum 100 characters')
-      .max(100, 'Your name should have at least 2 and maximum 100 characters'),
-    address: yup
+      .required(validationMessages.name)
+      .min(2, validationMessages.name)
+      .max(100, validationMessages.name),
+    surname: yup
       .string()
-      .required(
-        'Your address should have at least 20 and maximum 500 characters',
-      )
-      .min(
-        20,
-        'Your address should have at least 20 and maximum 500 characters',
-      )
-      .max(
-        500,
-        'Your address should have at least 20 and maximum 500 characters',
-      ),
+      .required(validationMessages.surname)
+      .min(2, validationMessages.surname)
+      .max(100, validationMessages.surname),
+    email: yup
+      .string()
+      .email(validationMessages.email)
+      .required(validationMessages.email),
+    city: yup
+      .string()
+      .required(validationMessages.city)
+      .min(3, validationMessages.city)
+      .max(50, validationMessages.city),
+    street: yup
+      .string()
+      .required(validationMessages.street)
+      .min(5, validationMessages.street)
+      .max(100, validationMessages.street),
+    postcode: yup
+      .string()
+      .length(6, validationMessages.postcode)
+      .matches(/^[0-9]{2}-[0-9]{3}/, validationMessages.postcode)
+      .required(validationMessages.postcode),
+    phone: yup.string().phone('PL').required(validationMessages.phone),
     deliveryType: yup.string().required(),
   })
   .required();
 
-const deliveryOptions = [
+export const deliveryOptions = [
   {
     label: 'Post',
     value: 'post',
@@ -48,54 +76,46 @@ const deliveryOptions = [
   {label: 'Courier', value: 'courier'},
 ];
 
-export const CheckoutForm = ({onSubmit}: CheckoutFormProps) => {
+export const CheckoutForm = ({onSubmit, defaultValues}: CheckoutFormProps) => {
   const formMethods = useForm<CheckoutFormFields>({
-    defaultValues: {
-      address: '',
-      deliveryType: deliveryOptions[0].value,
-      name: '',
-    },
+    defaultValues,
     resolver: yupResolver(validationSchema),
   });
 
+  useEffect(() => {
+    formMethods.reset(defaultValues);
+  }, [defaultValues]);
   const submitValues = (values: CheckoutFormFields) => {
     onSubmit(values);
   };
 
   return (
-    <>
-      <ScrollView style={styles.form} bounces={false} scrollEnabled={false}>
-        <FormProvider {...formMethods}>
-          <TextFieldRHF name="name" label="Name" />
-          <TextFieldRHF
-            name="address"
-            numberOfLines={3}
-            multiline
-            label="Address"
-          />
-          <DropdownRHF
-            name="deliveryType"
-            label="Delivery type"
-            options={deliveryOptions}
-            initialChosenOption={deliveryOptions[0]}
-          />
-        </FormProvider>
-      </ScrollView>
-      <View style={styles.actions}>
-        <Button
-          mode="contained"
-          onPress={formMethods.handleSubmit(submitValues)}>
-          Order
-        </Button>
-      </View>
-    </>
+    <FormProvider {...formMethods}>
+      <TextFieldRHF name="name" label="First name" />
+      <TextFieldRHF name="surname" label="Last name" />
+      <TextFieldRHF name="email" label="Email" />
+      <TextFieldRHF name="street" numberOfLines={2} multiline label="Street" />
+      <TextFieldRHF name="postcode" label="Postcode" />
+      <TextFieldRHF name="city" label="City" />
+      <TextFieldRHF name="phone" label="Phone number" />
+      <DropdownRHF
+        name="deliveryType"
+        label="Delivery type"
+        options={deliveryOptions}
+        initialChosenOption={deliveryOptions[0]}
+      />
+      <Button
+        mode="contained"
+        style={styles.submitButton}
+        onPress={formMethods.handleSubmit(submitValues)}>
+        Order
+      </Button>
+    </FormProvider>
   );
 };
 
 const styles = StyleSheet.create({
-  form: {height: '80%', paddingTop: 24, paddingVertical: 8},
-  actions: {
-    height: '20%',
-    flexDirection: 'column-reverse',
+  submitButton: {
+    marginVertical: 32,
   },
 });
