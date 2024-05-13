@@ -56,6 +56,22 @@ export const rootApi = createApi({
   }),
 });
 
+export const stripeApi = createApi({
+  reducerPath: 'stripeApi',
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'http://localhost:3000/',
+  }),
+  endpoints: build => ({
+    intents: build.mutation<{paymentIntent: string}, {amount: number}>({
+      query: arg => ({
+        url: 'payments/intents',
+        method: 'POST',
+        body: arg,
+      }),
+    }),
+  }),
+});
+
 export const {
   useAllProductsQuery,
   useCategoriesQuery,
@@ -65,3 +81,5 @@ export const {
   useAuthenticatedUserQuery,
   useLazyAuthenticatedUserQuery,
 } = rootApi;
+
+export const {useIntentsMutation} = stripeApi;
