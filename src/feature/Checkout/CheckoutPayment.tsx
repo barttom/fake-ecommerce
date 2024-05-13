@@ -3,6 +3,7 @@ import {Button, Text} from 'react-native-paper';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {useAppSelector} from '../../common/redux';
 import {selectCartItems} from '../Cart';
+import {selectDeliveryData} from '../Settings/settingsSelectors';
 import {OrderItem} from './OrderIItem';
 
 export type CheckoutPaymentProps = {onFinish: () => void};
@@ -13,6 +14,8 @@ export const CheckoutPayment = ({onFinish}: CheckoutPaymentProps) => {
     (acc, curr) => acc + curr.price * curr.quantity,
     0,
   );
+  const {email, phone, postalCode, city, address, firstName, lastName} =
+    useAppSelector(selectDeliveryData)!;
 
   return (
     <View style={styles.wrapper}>
@@ -23,6 +26,11 @@ export const CheckoutPayment = ({onFinish}: CheckoutPaymentProps) => {
         data={cartItems}
         renderItem={({item, index}) => <OrderItem data={item} order={index} />}
       />
+      <Text variant="headlineSmall">Delivery address:</Text>
+      <Text variant="bodyMedium">{`${firstName} ${lastName}`}</Text>
+      <Text variant="bodyMedium">{`${address} ${postalCode}, ${city}`}</Text>
+      <Text variant="bodyMedium">{phone}</Text>
+      <Text variant="bodyMedium">{email}</Text>
       <Text variant="headlineSmall" style={styles.headline}>
         Total price: ${totalPrice}
       </Text>
@@ -38,6 +46,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headline: {
-    marginBottom: 16,
+    marginVertical: 16,
   },
 });

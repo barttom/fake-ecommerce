@@ -5,21 +5,29 @@ import {AuthForm} from '../Auth/AuthForm';
 import {useAppSelector} from '../../common/redux';
 import {selectMe} from '../Auth/authSelector';
 
-import {CheckoutForm, deliveryOptions} from './CheckoutForm';
+import {selectDeliveryData} from '../Settings/settingsSelectors';
+import {
+  CheckoutForm,
+  CheckoutFormFields,
+  deliveryOptions,
+} from './CheckoutForm';
 
-export type CheckoutUserDataProps = {onUserDataSubmit: () => void};
+export type CheckoutUserDataProps = {
+  onUserDataSubmit: (values: CheckoutFormFields) => void;
+};
 
 export const CheckoutUserData = ({onUserDataSubmit}: CheckoutUserDataProps) => {
   const user = useAppSelector(selectMe);
+  const deliveryData = useAppSelector(selectDeliveryData);
   const defaultCheckoutFormValues = {
-    street: user?.address.address ?? '',
+    street: deliveryData?.address ?? user?.address.address ?? '',
     deliveryType: deliveryOptions[0].value,
-    name: user?.firstName ?? '',
-    surname: user?.lastName ?? '',
-    city: user?.address.city ?? '',
-    phone: user?.phone ?? '',
-    postcode: user?.address.postalCode ?? '',
-    email: user?.email ?? '',
+    name: deliveryData?.firstName ?? user?.firstName ?? '',
+    surname: deliveryData?.lastName ?? user?.lastName ?? '',
+    city: deliveryData?.city ?? user?.address.city ?? '',
+    phone: deliveryData?.phone ?? user?.phone ?? '',
+    postcode: deliveryData?.postalCode ?? user?.address.postalCode ?? '',
+    email: deliveryData?.email ?? user?.email ?? '',
   };
 
   return (

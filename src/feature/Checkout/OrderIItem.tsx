@@ -25,7 +25,7 @@ export const OrderItem = ({data, order}: OrderItemProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 16,
+    marginVertical: 2,
   },
   inline: {
     flexDirection: 'row',

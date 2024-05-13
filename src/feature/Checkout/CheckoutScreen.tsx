@@ -8,9 +8,11 @@ import {ScreenRollupWrapper} from '../../common/components/ScreenRollupWrapper';
 import {useAppDispatch, useAppSelector} from '../../common/redux';
 import {clearCart, selectCartItems} from '../Cart';
 import {useIntentsMutation} from '../../common/api';
+import {setDeliveryData} from '../Settings';
 import {CheckoutConfirmMessage} from './CheckoutConfirmMessage';
 import {CheckoutUserData} from './CheckoutUserData';
 import {CheckoutPayment} from './CheckoutPayment';
+import {CheckoutFormFields} from './CheckoutForm';
 type OrderStatus = 'deliveryData' | 'payment' | 'success';
 
 export const CheckoutScreen = () => {
@@ -65,7 +67,18 @@ export const CheckoutScreen = () => {
     setOrderStatus('success');
   };
 
-  const goToPayment = () => {
+  const goToPayment = (values: CheckoutFormFields) => {
+    dispatch(
+      setDeliveryData({
+        address: values.street,
+        email: values.email,
+        phone: values.phone,
+        firstName: values.name,
+        lastName: values.surname,
+        postalCode: values.postcode,
+        city: values.city,
+      }),
+    );
     setOrderStatus('payment');
   };
 
