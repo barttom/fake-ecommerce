@@ -48,17 +48,19 @@ export type User = {
   token: string;
 };
 
-export type AuthenticatedUser = Omit<User, 'token'> & {
-  address: {
-    address: string;
-    city: string;
-    coordinates: {
-      lat: number;
-      lng: number;
-    };
-    postalCode: string;
-    state: string;
+export type UserAddress = {
+  address: string;
+  city: string;
+  coordinates: {
+    lat: number;
+    lng: number;
   };
+  postalCode: string;
+  state: string;
+};
+
+export type AuthenticatedUser = Omit<User, 'token'> & {
+  address: UserAddress;
   phone: string;
 };
 export type AuthenticatedUserResponse = AuthenticatedUser;

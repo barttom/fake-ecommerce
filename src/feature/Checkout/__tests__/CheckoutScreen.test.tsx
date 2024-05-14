@@ -110,9 +110,8 @@ describe('<CheckoutScreen />', () => {
       await rntlUser.press(screen.getByText('Post'));
       await rntlUser.press(screen.getByText('Courier'));
       await rntlUser.press(screen.getByText('Order'));
-      await rntlUser.press(screen.getByText('finish'));
     });
 
-    expect(screen.getByText('Your order has been finished')).toBeOnTheScreen();
+    expect(screen.getByText('Payment')).toBeOnTheScreen();
   });
 });

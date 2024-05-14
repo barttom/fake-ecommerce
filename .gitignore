@@ -64,3 +64,5 @@ yarn-error.log
 
 #jest
 coverage/
+
+.env

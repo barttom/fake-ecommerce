@@ -5,7 +5,7 @@ import {
 } from '@reduxjs/toolkit';
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import {setupListeners} from '@reduxjs/toolkit/query';
-import {rootApi} from '../api';
+import {rootApi, stripeApi} from '../api';
 import {cartReducer} from '../../feature/Cart/';
 import {settingsReducer} from '../../feature/Settings/';
 import {authReducer} from '../../feature/Auth';
@@ -15,6 +15,7 @@ const rootReducer = combineReducers({
   cart: cartReducer,
   settings: settingsReducer,
   [rootApi.reducerPath]: rootApi.reducer,
+  [stripeApi.reducerPath]: stripeApi.reducer,
 });
 
 export const setupStore = (preloadedState?: PreloadedState<AppState>) => {
@@ -24,7 +25,7 @@ export const setupStore = (preloadedState?: PreloadedState<AppState>) => {
       getDefaultMiddleware({
         immutableCheck: false,
         serializableCheck: false,
-      }).concat(rootApi.middleware),
+      }).concat(rootApi.middleware, stripeApi.middleware),
     preloadedState,
   });
 };
