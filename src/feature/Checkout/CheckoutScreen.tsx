@@ -9,16 +9,21 @@ import {useAppDispatch, useAppSelector} from '../../common/redux';
 import {clearCart, selectCartItems} from '../Cart';
 import {useIntentsMutation} from '../../common/api';
 import {setDeliveryData} from '../Settings';
+import {addOrderItem} from '../Orders/orderSlice';
+import {selectDeliveryData} from '../Settings/settingsSelectors';
 import {CheckoutConfirmMessage} from './CheckoutConfirmMessage';
 import {CheckoutUserData} from './CheckoutUserData';
 import {CheckoutPayment} from './CheckoutPayment';
 import {CheckoutFormFields} from './CheckoutForm';
-type OrderStatus = 'deliveryData' | 'payment' | 'success';
+
+type ProcessStatus = 'deliveryData' | 'payment' | 'success';
 
 export const CheckoutScreen = () => {
-  const [orderStatus, setOrderStatus] = useState<OrderStatus>('deliveryData');
+  const [processStatus, setProcessStatus] =
+    useState<ProcessStatus>('deliveryData');
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector(selectCartItems);
+  const deliveryData = useAppSelector(selectDeliveryData);
   const totalPrice = cartItems.reduce(
     (acc, curr) => acc + curr.price * curr.quantity,
     0,
@@ -63,8 +68,16 @@ export const CheckoutScreen = () => {
       return;
     }
 
+    dispatch(
+      addOrderItem({
+        items: cartItems,
+        deliveryData,
+      }),
+    );
+
     dispatch(clearCart());
-    setOrderStatus('success');
+
+    setProcessStatus('success');
   };
 
   const goToPayment = (values: CheckoutFormFields) => {
@@ -79,13 +92,13 @@ export const CheckoutScreen = () => {
         city: values.city,
       }),
     );
-    setOrderStatus('payment');
+    setProcessStatus('payment');
   };
 
   return (
     <ScreenRollupWrapper withoutAnimation>
       {(() => {
-        switch (orderStatus) {
+        switch (processStatus) {
           case 'payment':
             return <CheckoutPayment onFinish={finishOrder} />;
           case 'success':

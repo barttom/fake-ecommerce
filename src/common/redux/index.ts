@@ -9,11 +9,13 @@ import {rootApi, stripeApi} from '../api';
 import {cartReducer} from '../../feature/Cart/';
 import {settingsReducer} from '../../feature/Settings/';
 import {authReducer} from '../../feature/Auth';
+import {ordersReducer} from '../../feature/Orders/orderSlice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
   cart: cartReducer,
   settings: settingsReducer,
+  orders: ordersReducer,
   [rootApi.reducerPath]: rootApi.reducer,
   [stripeApi.reducerPath]: stripeApi.reducer,
 });
