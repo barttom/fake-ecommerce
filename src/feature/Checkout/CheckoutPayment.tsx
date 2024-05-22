@@ -4,7 +4,7 @@ import {FlatList, StyleSheet, View} from 'react-native';
 import {useAppSelector} from '../../common/redux';
 import {selectCartItems} from '../Cart';
 import {selectDeliveryData} from '../Settings/settingsSelectors';
-import {OrderItem} from './OrderIItem';
+import {CheckoutOrderItem} from './CheckoutOrderIItem';
 
 export type CheckoutPaymentProps = {onFinish: () => void};
 
@@ -24,7 +24,9 @@ export const CheckoutPayment = ({onFinish}: CheckoutPaymentProps) => {
       </Text>
       <FlatList
         data={cartItems}
-        renderItem={({item, index}) => <OrderItem data={item} order={index} />}
+        renderItem={({item, index}) => (
+          <CheckoutOrderItem data={item} order={index} />
+        )}
       />
       <Text variant="headlineSmall">Delivery address:</Text>
       <Text variant="bodyMedium">{`${firstName} ${lastName}`}</Text>

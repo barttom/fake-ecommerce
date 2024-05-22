@@ -3,9 +3,9 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {ProductsScreen} from '../../../feature/Products/';
 import {CartScreen} from '../../../feature/Cart/';
-import {SettingsScreen} from '../../../feature/Settings/';
 import {TabStackParamList} from './navigatorTypes';
 import {CartNavigationIcon} from './CartNavigationIcon';
+import {SettingsNavigator} from './SettingsNavigator';
 
 const TabStack = createMaterialBottomTabNavigator<TabStackParamList>();
 
@@ -30,7 +30,7 @@ export const TabNavigator = () => {
       />
       <TabStack.Screen
         name="Settings"
-        component={SettingsScreen}
+        component={SettingsNavigator}
         options={{
           tabBarIcon: ({color}) => (
             <MaterialIcons name="settings" color={color} size={24} />
