@@ -2,10 +2,21 @@ import {MMKV} from 'react-native-mmkv';
 import {CartState} from '../../feature/Cart';
 import {SettingsState} from '../../feature/Settings';
 import {AuthenticatedUser, User} from '../api/apiTypes';
+import {OrderState} from '../../feature/Orders/orderSlice';
 
 const mmkv = new MMKV();
-export type CacheItem = CartState | SettingsState | User | AuthenticatedUser;
-export type CacheKey = 'settings' | 'cart' | 'user' | 'authenticatedUser';
+export type CacheItem =
+  | CartState
+  | SettingsState
+  | User
+  | AuthenticatedUser
+  | OrderState;
+export type CacheKey =
+  | 'settings'
+  | 'cart'
+  | 'user'
+  | 'authenticatedUser'
+  | 'orders';
 
 export const setCacheItem = (key: CacheKey, item: CacheItem) => {
   mmkv.set(key, JSON.stringify(item));

@@ -1,5 +1,6 @@
 import {NativeStackScreenProps} from 'react-native-screens/native-stack';
 import {Product} from '../../api/apiTypes';
+import {OrderItem} from '../../../feature/Orders/orderSlice';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -34,4 +35,25 @@ export type CartScreenProps = NativeStackScreenProps<
 export type SettingsScreenProps = NativeStackScreenProps<
   TabStackParamList,
   'Settings'
+>;
+
+export type SettingsStackParamList = {
+  BasicSettings: undefined;
+  Orders: undefined;
+  SingleOrder: {orderId: OrderItem['id']};
+};
+
+export type BasicSettingsScreenProps = NativeStackScreenProps<
+  SettingsStackParamList,
+  'BasicSettings'
+>;
+
+export type OrdersScreenProps = NativeStackScreenProps<
+  SettingsStackParamList,
+  'Orders'
+>;
+
+export type SingleOrderScreenProps = NativeStackScreenProps<
+  SettingsStackParamList,
+  'SingleOrder'
 >;

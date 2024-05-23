@@ -17,7 +17,7 @@ const initialCartState: CartState = {
 };
 const cachedCart = getCacheItem('cart');
 
-const authSlice = createSlice({
+const cartSlice = createSlice({
   name: 'cart',
   initialState: cachedCart || initialCartState,
   reducers: {
@@ -54,4 +54,4 @@ const authSlice = createSlice({
 export const {
   actions: {addOrEditCartItem, removeItemFromCart, clearCart},
   reducer: cartReducer,
-} = authSlice;
+} = cartSlice;

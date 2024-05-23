@@ -3,9 +3,9 @@ import {StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-paper';
 import {CartItem} from '../Cart';
 
-export type OrderItemProps = {data: CartItem; order: number};
+export type CheckoutOrderItemProps = {data: CartItem; order: number};
 
-export const OrderItem = ({data, order}: OrderItemProps) => {
+export const CheckoutOrderItem = ({data, order}: CheckoutOrderItemProps) => {
   const {title, price, quantity} = data;
 
   return (
