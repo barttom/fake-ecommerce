@@ -9,7 +9,7 @@ import {useAppDispatch, useAppSelector} from '../../common/redux';
 import {clearCart, selectCartItems} from '../Cart';
 import {useIntentsMutation} from '../../common/api';
 import {setDeliveryData} from '../Settings';
-import {addOrderItem} from '../Orders/orderSlice';
+import {addOrderItem} from '../Orders/';
 import {selectDeliveryData} from '../Settings/settingsSelectors';
 import {CheckoutConfirmMessage} from './CheckoutConfirmMessage';
 import {CheckoutUserData} from './CheckoutUserData';
