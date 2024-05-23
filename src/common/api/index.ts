@@ -59,7 +59,7 @@ export const rootApi = createApi({
 export const stripeApi = createApi({
   reducerPath: 'stripeApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:3000/',
+    baseUrl: 'http://127.0.0.1:3000/',
   }),
   endpoints: build => ({
     intents: build.mutation<{paymentIntent: string}, {amount: number}>({

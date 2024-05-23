@@ -47,3 +47,13 @@ export type BasicSettingsScreenProps = NativeStackScreenProps<
   SettingsStackParamList,
   'BasicSettings'
 >;
+
+export type OrdersScreenProps = NativeStackScreenProps<
+  SettingsStackParamList,
+  'Orders'
+>;
+
+export type SingleOrderScreenProps = NativeStackScreenProps<
+  SettingsStackParamList,
+  'SingleOrder'
+>;
