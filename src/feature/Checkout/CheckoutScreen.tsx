@@ -44,6 +44,11 @@ export const CheckoutScreen = () => {
       merchantDisplayName: 'fakeEcommerce',
       paymentIntentClientSecret: paymentIntentResponse.data.paymentIntent,
       style: 'automatic',
+      googlePay: {
+        testEnv: true,
+        merchantCountryCode: 'PL',
+        currencyCode: 'USD',
+      },
     });
 
     if (initResponse.error) {
