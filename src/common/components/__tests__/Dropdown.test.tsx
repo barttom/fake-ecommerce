@@ -50,7 +50,7 @@ describe('<Dropdown />', () => {
       await rntlUser.press(screen.getByText('Choose Your hero'));
       await rntlUser.press(screen.getByText('Batman'));
 
-      expect(onSelectMocked).toBeCalledWith(optionsMocked[0].value);
+      expect(onSelectMocked).toHaveBeenCalledWith(optionsMocked[0].value);
     });
   });
   describe('Testing with usage example, RECOMMENDED 👍', () => {
