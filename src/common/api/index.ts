@@ -41,7 +41,7 @@ export const rootApi = createApi({
       query: id => `products/${id}`,
     }),
     categories: build.query<CategoriesResponse, void>({
-      query: () => 'products/categories',
+      query: () => 'products/category-list',
     }),
     authenticateUser: build.mutation<AuthResponse, AuthRequestParams>({
       query: body => ({

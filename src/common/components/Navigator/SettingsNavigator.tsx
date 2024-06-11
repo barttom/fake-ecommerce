@@ -1,8 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {SettingsScreen} from '../../../feature/Settings';
-import {OrdersScreen} from '../../../feature/Orders/OrdersScreen';
-import {SingleOrderScreen} from '../../../feature/Orders/SingleOrderScreen';
+import {OrdersScreen, SingleOrderScreen} from '../../../feature/Orders';
 import {SettingsStackParamList} from './navigatorTypes';
 
 const Stack = createStackNavigator<SettingsStackParamList>();

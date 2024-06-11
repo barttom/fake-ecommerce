@@ -130,7 +130,7 @@ export const productsHandlers = [
       }),
     );
   }),
-  rest.get(`${ROOT_API_URL}products/categories`, (_, res, ctx) =>
+  rest.get(`${ROOT_API_URL}products/category-list`, (_, res, ctx) =>
     res(ctx.json(categoriesMocked)),
   ),
 ];
