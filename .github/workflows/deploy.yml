@@ -1,4 +1,4 @@
-name: GitHub Actions
+name: Deployment
 run-name: Deployment
 on:
   push:
