@@ -1,0 +1,23 @@
+name: Deployment
+run-name: Deployment
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  code-quality-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: create-json
+        id: create-json
+        uses: jsdaniell/create-json@v1.2.3
+        with:
+          name: "appcenter-config.json"
+          json: ${{ secrets.APPCENTER_JSON }}
+          dir: "android/app/src/main/assets/"
+      - run: git config --global user.email "bartlomiejtomczyk@gmail.com" && git config --global user.name "barttom" && git add --force android/app/src/main/assets/appcenter-config.json && git commit -a -m "Deploy Heroku Commit with the Credentials JSON created!"
+
