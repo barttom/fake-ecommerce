@@ -19,5 +19,5 @@ jobs:
           name: "appcenter-config.json"
           json: ${{ secrets.APPCENTER_JSON }}
           dir: "android/app/src/main/assets/"
-      - run: git config --global user.email "bartlomiejtomczyk@gmail.com" && git config --global user.name "barttom" && git add --force android/app/src/main/assets/appcenter-config.json && git commit -a -m "Deploy Heroku Commit with the Credentials JSON created!"
+      - run: git config --global user.email "bartlomiejtomczyk@gmail.com" && git config --global user.name "barttom" && git add --force android/app/src/main/assets/appcenter-config.json && git commit -a -m "Deployed Appcenter config file for android"
 
