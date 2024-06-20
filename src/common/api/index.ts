@@ -44,11 +44,13 @@ export const rootApi = createApi({
       query: () => 'products/category-list',
     }),
     authenticateUser: build.mutation<AuthResponse, AuthRequestParams>({
-      query: body => ({
-        url: 'auth/login',
-        method: 'POST',
-        body,
-      }),
+      query: body => {
+        return {
+          url: 'auth/login',
+          method: 'POST',
+          body,
+        };
+      },
     }),
     authenticatedUser: build.query<AuthenticatedUserResponse, void>({
       query: () => 'auth/me',
