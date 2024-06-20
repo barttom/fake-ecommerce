@@ -32,6 +32,7 @@ export const AuthForm = () => {
   const [isPasswordHide, setIsPasswordHide] = useState(true);
   const [displayError, setDisplayError] = useState(false);
   const [sendAuthCredentials, {error, isError}] = useAuthenticateUserMutation();
+
   const [fetchAuthenticatedUser] = useLazyAuthenticatedUserQuery();
   const onSubmit = async (values: AuthFormValues) => {
     await sendAuthCredentials(values);
@@ -73,6 +74,9 @@ export const AuthForm = () => {
           secureTextEntry={isPasswordHide}
           right={
             <TextInput.Icon
+              accessibilityLabel={
+                isPasswordHide ? 'Show password button' : 'Hide password button'
+              }
               icon={isPasswordHide ? 'eye' : 'eye-off'}
               onPress={() => setIsPasswordHide(!isPasswordHide)}
             />

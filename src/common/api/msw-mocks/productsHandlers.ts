@@ -106,6 +106,40 @@ export const productsSecondPageMocked = {
 
 const categoriesMocked = ['smartphones', 'laptops'];
 
+export const loginResponseMocked = {
+  email: 'emily.johnson@x.dummyjson.com',
+  firstName: 'Emily',
+  gender: 'female',
+  id: 1,
+  image: 'https://dummyjson.com/icon/emilys/128',
+  lastName: 'Johnson',
+  refreshToken:
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJlbWlseXMiLCJlbWFpbCI6ImVtaWx5LmpvaG5zb25AeC5kdW1teWpzb24uY29tIiwiZmlyc3ROYW1lIjoiRW1pbHkiLCJsYXN0TmFtZSI6IkpvaG5zb24iLCJnZW5kZXIiOiJmZW1hbGUiLCJpbWFnZSI6Imh0dHBzOi8vZHVtbXlqc29uLmNvbS9pY29uL2VtaWx5cy8xMjgiLCJpYXQiOjE3MTg4MjUyNjcsImV4cCI6MTcyMTQxNzI2N30.AyRZB1sONOkYjfTeYIZrnnrVLHbQEQyTMvQAGJihpKg',
+  token:
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJlbWlseXMiLCJlbWFpbCI6ImVtaWx5LmpvaG5zb25AeC5kdW1teWpzb24uY29tIiwiZmlyc3ROYW1lIjoiRW1pbHkiLCJsYXN0TmFtZSI6IkpvaG5zb24iLCJnZW5kZXIiOiJmZW1hbGUiLCJpbWFnZSI6Imh0dHBzOi8vZHVtbXlqc29uLmNvbS9pY29uL2VtaWx5cy8xMjgiLCJpYXQiOjE3MTg4MjUyNjcsImV4cCI6MTcxODgyODg2N30.PZke23h0CUxnVSQ1HEidzJqHG7uq4j5z1s-fKuIbOJo',
+  username: 'emilys',
+};
+
+export const authenticatedUserMocked = {
+  address: {
+    address: '626 Main Street',
+    city: 'Phoenix',
+    coordinates: {lat: -77.16213, lng: -92.084824},
+    country: 'United States',
+    postalCode: '29112',
+    state: 'Mississippi',
+    stateCode: 'MS',
+  },
+  email: 'emily.johnson@x.dummyjson.com',
+  firstName: 'Emily',
+  gender: 'female',
+  id: 1,
+  image: 'https://dummyjson.com/icon/emilys/128',
+  lastName: 'Johnson',
+  phone: '+81 965-431-3024',
+  username: 'emilys',
+};
+
 export const productsHandlers = [
   rest.get(`${ROOT_API_URL}products`, (req, res, ctx) => {
     const skipParam = req.url.searchParams.get('skip');
@@ -132,5 +166,17 @@ export const productsHandlers = [
   }),
   rest.get(`${ROOT_API_URL}products/category-list`, (_, res, ctx) =>
     res(ctx.json(categoriesMocked)),
+  ),
+  rest.post(`${ROOT_API_URL}auth/login`, async (req, res, ctx) => {
+    const body = await req.json();
+
+    if (body.username === 'emilys' && body.password === 'emilyspass') {
+      return res(ctx.json(loginResponseMocked));
+    }
+
+    return res(ctx.status(400), ctx.json({message: 'Invalid credentials'}));
+  }),
+  rest.get(`${ROOT_API_URL}auth/me`, (_, res, ctx) =>
+    res(ctx.json(authenticatedUserMocked)),
   ),
 ];
