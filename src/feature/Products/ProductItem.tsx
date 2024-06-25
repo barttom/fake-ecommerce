@@ -23,7 +23,7 @@ export const ProductItem = ({
     navigate('SingleProduct', {productId: id});
   };
   return (
-    <View style={styles.wrapper}>
+    <View style={styles.wrapper} testID="product-item">
       <Pressable
         accessibilityRole="button"
         onPress={handleNavigation}

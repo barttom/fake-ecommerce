@@ -1,0 +1,58 @@
+appId: com.fakeecommerce
+---
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 5000
+- tapOn:
+    id: "product-item"
+    index: 1
+- tapOn: "Increase quantity button"
+- tapOn: "Add to cart"
+- tapOn: "Go to the cart"
+- tapOn: "Checkout"
+- doubleTapOn: "First name input field"
+- eraseText
+- inputText: "John"
+- scrollUntilVisible:
+      element:
+          text: "Last name input field" # or any other selector
+      direction: DOWN # DOWN|UP|LEFT|RIGHT (optional, default: DOWN)
+      timeout: 10000 # (optional, default: 20000) ms
+      speed: 10 # 0-100 (optional, default: 40) Scroll speed. Higher values scroll faster.
+      visibilityPercentage: 100 # 0-100 (optional, default: 100) Percentage of element visible in viewport
+- doubleTapOn: "Last name input field"
+- eraseText
+- inputText: "Doe"
+- assertVisible: "Email input field"
+- doubleTapOn: "Email input field"
+- eraseText
+- inputText: "johndoe@corp.com"
+- assertVisible: "Street input field"
+- doubleTapOn: "Street input field"
+- eraseText
+- inputText: "nice 66"
+- assertVisible: "Postcode input field"
+- doubleTapOn: "Postcode input field"
+- eraseText
+- inputText: "10-100"
+- scrollUntilVisible:
+      element:
+          text: "Phone number input field" # or any other selector
+      direction: DOWN # DOWN|UP|LEFT|RIGHT (optional, default: DOWN)
+      timeout: 10000 # (optional, default: 20000) ms
+      speed: 10 # 0-100 (optional, default: 40) Scroll speed. Higher values scroll faster.
+      visibilityPercentage: 100 # 0-100 (optional, default: 100) Percentage of element visible in viewport
+- assertVisible: "City input field"
+- doubleTapOn: "City input field"
+- eraseText
+- inputText: "Warsaw"
+- assertVisible: "Phone number input field"
+- doubleTapOn: "Phone number input field"
+- eraseText
+- inputText: "+48100200300"
+- tapOn: "Order"
+- tapOn: "Order"
+- tapOn: "Payment"
+
+
+
