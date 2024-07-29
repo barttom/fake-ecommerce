@@ -1,0 +1,66 @@
+name: Build and deploy Android release
+on:
+  push:
+    tags:
+      - 'android*'
+jobs:
+  testFlight-build:
+    name: android-beta-build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Checkout to git repository
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: |
+          yarn install
+      - name: Install Fastlane
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version:  2.7.6
+      - name: Install npm dependencies
+        run: |
+          yarn install
+      - name: Install Fastlane
+        run: |
+          bundle install
+          bundle update fastlane
+      - name: Build and upload to TestFlight
+        run: |
+          bundle exec fastlane android beta
+          env: 
+             ANDROID_KEYSTORE_FILE: ${{ secrets.ANDROID_KEYSTORE_FILE }}
+             ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+             ANDROID_KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
+  release-build:
+    name: Android-release-build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Checkout to git repository
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: |
+          yarn install
+      - name: Install Fastlane
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.7.6
+      - name: Install npm dependencies
+        run: |
+          yarn install
+      - name: Install Fastlane
+        run: |
+          bundle install
+          bundle update fastlane
+      - name: release-build
+        run: |
+          bundle exec fastlane android release
+          env: 
+             ANDROID_KEYSTORE_FILE: ${{ secrets.ANDROID_KEYSTORE_FILE }}
+             ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+             ANDROID_KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
